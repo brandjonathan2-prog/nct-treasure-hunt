@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NCS Treasure Hunt</title>
+<meta name="description" content="NCS Treasure Hunt: walking treasure hunts through the city. Follow the map, find the clues, answer the questions.">
+<meta name="theme-color" content="#fbf9f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151b22" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NCS Hunt">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Start screen -->
+<main class="intro" id="intro">
+  <div class="intro-inner">
+    <p class="kicker">NCS Treasure Hunt</p>
+    <h1 id="introTitle">Greenwich Meridian Hunt</h1>
+    <p class="sub" id="introSub">7 stops · about 2.4 km · 90 minutes</p>
+    <ol class="how">
+      <li><span><b>Follow the map</b> to each stop. Your phone's location shows where you are.</span></li>
+      <li><span><b>Arrive</b> within 35 metres and the question unlocks.</span></li>
+      <li><span><b>Answer</b> from what you can see. Hints cost points.</span></li>
+    </ol>
+    <button class="primary big" id="startBtn">Start the hunt</button>
+    <button class="link" id="testBtn">Try it at home (test mode)</button>
+    <p class="note" id="geoNote" hidden></p>
+    <div class="install" id="install" hidden></div>
+  </div>
+</main>
+
+<!-- Game screen -->
+<div class="app" id="app" hidden>
+  <header class="bar">
+    <h1 id="barTitle">Greenwich Meridian Hunt</h1>
+    <div class="stat"><b id="score">0</b>points</div>
+    <div class="stat"><b id="prog">1/7</b>stop</div>
+  </header>
+  <div class="mapwrap">
+    <div id="map" aria-label="Map of the hunt route"></div>
+    <div class="mode" id="mode"><span class="dot" id="modeDot"></span><span id="modeTxt">Locating…</span></div>
+    <button class="recentre" id="recentre" aria-label="Centre map on me">◎</button>
+  </div>
+  <section class="sheet" id="sheet" aria-live="polite"></section>
+</div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
