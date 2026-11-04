@@ -178,7 +178,16 @@
 
   /* ---------- Location ---------- */
   // choice: a church index, "nearest", or "continue"
+  /* Full screen (Android Chrome and other browsers that allow it; iPhone Safari doesn't) */
+  const canFullscreen = () => !isIOS() && !isStandalone() && document.fullscreenEnabled && !!document.documentElement.requestFullscreen;
+  function goFullscreen() {
+    if (!canFullscreen() || document.fullscreenElement) return;
+    document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+  }
+  document.addEventListener("fullscreenchange", () => { if (HUNT && !$("app").hidden) render(); });
+
   function startLive(choice, atChurch) {
+    goFullscreen(); // must run straight from the tap
     if (!("geolocation" in navigator)) return geoFail({ code: 0 });
     if (!window.isSecureContext) return geoFail({ code: -1 });
     const btn = choice === "continue" ? $("continueBtn") : $("startBtn");
@@ -216,6 +225,7 @@
 
   // Test mode: tap the map to move. Starts at the QR church if there is one.
   function startTest(qr) {
+    goFullscreen();
     mode = "test";
     if (watchId != null) navigator.geolocation.clearWatch(watchId);
     const inProgress = S.started && S.start != null && S.i > 0 && S.i < N();
@@ -372,13 +382,13 @@
       h += `${msg ? `<p class="msg ${msg.c}">${esc(msg.t)}</p>` : ""}<p class="fact">${esc(s.fact)}</p>
         <div class="row"><button class="primary" id="nextB">${S.i === st.length - 1 ? "Finish" : `Next: ${esc(st[stopAt(S.i + 1)].name)} →`}</button></div>`;
     }
-    h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}<button class="link" id="restartB">Restart</button><button class="link" id="allB">All hunts</button></div>`;
+    h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}${canFullscreen() && !document.fullscreenElement ? `<button class="link" id="fullB">Full screen</button>` : ""}<button class="link" id="restartB">Restart</button><button class="link" id="allB">All hunts</button></div>`;
     el.innerHTML = h;
 
     const on = (id, fn) => { const x = $(id); if (x) x.onclick = fn; };
     const f = $("qf"); if (f) f.onsubmit = e => { e.preventDefault(); $("ans").blur(); answer($("ans").value); };
     on("hintB", () => { S.hint = true; save(); render(); });
-    on("skipB", skip); on("allB", () => goTo("")); on("nextB", next); on("testB2", startTest);
+    on("skipB", skip); on("allB", () => goTo("")); on("fullB", goFullscreen); on("nextB", next); on("testB2", startTest);
     on("restartB", () => { const x = $("restartB"); if (x.dataset.sure) restart(); else { x.dataset.sure = 1; x.textContent = "Tap again to restart"; } });
     on("jumpB", () => { pos = { lat: s.lat - 0.00012, lon: s.lon + 0.00008 }; acc = 5; updateMe(); checkArrival(); render(); refit(); });
   }
