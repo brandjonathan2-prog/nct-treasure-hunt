@@ -35,7 +35,6 @@
   try { const s = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(KEY.replace("nct-", "ncs-")) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
-  let revealQuestion = false; // set when a question unlocks, so render() brings it into view
   let installPrompt = null; // Chrome's "install this app" prompt, saved for when the player taps Install
   let HUNT, map, layers = {}, pos = null, acc = null, mode = "none", watchId = null, msg = null, followed = false;
 
@@ -317,7 +316,7 @@
     const s = HUNT.stops[curK()]; if (!pos || S.unlocked) return;
     const slack = Math.min(acc || 0, 20); // forgive some GPS wobble
     if (dist(pos, s) <= HUNT.radius + slack) {
-      S.unlocked = true; save(); revealQuestion = true;
+      S.unlocked = true; save();
       msg = { t: "You've arrived. Answer the question to move on.", c: "good" };
       if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
     }
@@ -329,20 +328,6 @@
     if (ok) { const p = points(); S.score += p; S.solved = true; S.results.push({ name: s.name, pts: p }); msg = { t: `Correct. +${p} points.`, c: "good" }; }
     else { S.tries++; msg = { t: S.tries >= 3 ? "Not quite. Take a hint or skip this one." : "Not quite. Try again.", c: "bad" }; }
     save(); render();
-    if (ok) $("sheet").scrollTop = 0;
-    showResult();
-  }
-  // Bring the "Correct" / "Not quite" line into view. Wait for the on-screen keyboard to close first:
-  // on iPhone it leaves the page scrolled, which would otherwise hide the message.
-  function showResult() {
-    setTimeout(() => { window.scrollTo(0, 0); revealInSheet($("sheet").querySelector(".msg")); }, 350);
-  }
-  // Scroll the bottom panel so that el is fully in view (its top first, if it's taller than the panel)
-  function revealInSheet(el) {
-    const sheet = $("sheet"); if (!el) return;
-    const top = el.getBoundingClientRect().top - sheet.getBoundingClientRect().top + sheet.scrollTop - 12;
-    const bottom = top + el.offsetHeight + 24;
-    if (top < sheet.scrollTop || bottom > sheet.scrollTop + sheet.clientHeight) sheet.scrollTop = Math.max(0, top);
   }
   function next() { S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); render(); $("sheet").scrollTop = 0; refit(); }
   // Frame the map after the sheet below it has settled to its new height
@@ -374,7 +359,7 @@
     let h = `<div class="eyebrow"><span>Church ${S.i + 1} of ${st.length}</span><span>${s.lat.toFixed(4)}°N ${Math.abs(s.lon).toFixed(4)}°W</span></div>
       <h2>${esc(s.name)}</h2>`;
     if (!S.unlocked && S.i > 0 && s.getThere) h += `<p class="getthere"><b>Getting here from ${esc(st[prevK(k)].name)}</b>${esc(s.getThere)}</p>`;
-    if (!S.solved) h += `<p class="clue">${esc(s.find)}</p>`; // once answered, the result comes straight after the name
+    h += `<p class="clue">${esc(s.find)}</p>`;
     if (s.photo && !S.solved) h += photoCard(s.photo);
     if (s.inside && !S.solved) h += `<p class="inside">This clue is inside the church. Check it's open, and if a service is on, please wait or come back later.</p>`;
     if (!S.unlocked) {
@@ -406,7 +391,6 @@
     on("skipB", skip); on("allB", () => goTo("")); on("fullB", goFullscreen); on("nextB", next); on("testB2", startTest);
     on("restartB", () => { const x = $("restartB"); if (x.dataset.sure) restart(); else { x.dataset.sure = 1; x.textContent = "Tap again to restart"; } });
     on("jumpB", () => { pos = { lat: s.lat - 0.00012, lon: s.lon + 0.00008 }; acc = 5; updateMe(); checkArrival(); render(); refit(); });
-    if (revealQuestion && $("qf")) { revealQuestion = false; revealInSheet($("qf")); }
   }
 
   /* ---------- Add to Home Screen ---------- */
