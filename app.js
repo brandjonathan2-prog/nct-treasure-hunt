@@ -184,7 +184,7 @@
     if (!canFullscreen() || document.fullscreenElement) return;
     document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
   }
-  document.addEventListener("fullscreenchange", () => { if (HUNT && !$("app").hidden) render(); });
+  document.addEventListener("fullscreenchange", () => { if (HUNT && !$("app").hidden && !$("ans")) render(); });
 
   function startLive(choice, atChurch) {
     goFullscreen(); // must run straight from the tap
@@ -207,7 +207,15 @@
   }
   function onPos(p) {
     pos = { lat: p.coords.latitude, lon: p.coords.longitude }; acc = p.coords.accuracy;
-    checkArrival(); if (map) { updateMe(); if (!followed) { followed = true; render(); refit(); } else render(); }
+    const wasUnlocked = S.unlocked;
+    checkArrival();
+    if (!map) return;
+    updateMe();
+    if (!followed) { followed = true; render(); refit(); return; }
+    // Once the question is showing, a new GPS fix only updates the GPS label. Rebuilding the panel
+    // would wipe the answer box while someone is typing.
+    if (wasUnlocked) $("modeTxt").textContent = acc ? `GPS ±${Math.round(acc)} m` : "GPS live";
+    else render();
   }
   function geoFail(e) {
     const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -383,7 +391,11 @@
         <div class="row"><button class="primary" id="nextB">${S.i === st.length - 1 ? "Finish" : `Next: ${esc(st[stopAt(S.i + 1)].name)} →`}</button></div>`;
     }
     h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}${canFullscreen() && !document.fullscreenElement ? `<button class="link" id="fullB">Full screen</button>` : ""}<button class="link" id="restartB">Restart</button><button class="link" id="allB">All hunts</button></div>`;
+    const old = $("ans"), typed = old ? old.value : "", hadFocus = old && document.activeElement === old;
     el.innerHTML = h;
+    const box = $("ans");
+    if (box && typed && !box.value) box.value = typed;
+    if (box && hadFocus) box.focus({ preventScroll: true });
 
     const on = (id, fn) => { const x = $(id); if (x) x.onclick = fn; };
     const f = $("qf"); if (f) f.onsubmit = e => { e.preventDefault(); $("ans").blur(); answer($("ans").value); };
