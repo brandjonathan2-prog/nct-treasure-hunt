@@ -1,22 +1,21 @@
 {
   "id": "greenwich-churches",
   "title": "Greenwich Churches",
-  "subtitle": "4 stops · 2.3 km walk · about 75 minutes",
+  "subtitle": "Circular trail · 4 churches · 2–2.5 km walk · about 75 minutes",
   "area": "Greenwich, London",
+  "loop": true,
   "radius": 40,
-  "finish": "You've visited four Greenwich churches, from a Saxon martyr's shrine to a Jacobean almshouse",
-  "start": {
-    "lat": 51.4817,
-    "lon": -0.0104,
-    "label": "Cutty Sark DLR station"
-  },
+  "transport": "Cutty Sark DLR and Greenwich station are a few minutes' walk from St Alfege.",
+  "finish": "You've visited all four Greenwich churches",
   "stops": [
     {
+      "id": "st-alfege",
       "name": "St Alfege Church",
       "lat": 51.48045,
       "lon": -0.00964,
       "inside": true,
-      "clue": "Start at St Alfege on Greenwich Church Street, built where Archbishop Alfege was killed by Danish raiders in 1012. Go inside and find the old keyboard in a glass case in the south-west corner.",
+      "getThere": "Walk west along Old Woolwich Road and Romney Road into Greenwich town centre. St Alfege is the large stone church with a tower on Greenwich Church Street.",
+      "find": "St Alfege stands where Archbishop Alfege was killed by Danish raiders in 1012. Go inside and find the old keyboard in a glass case in the south-west corner.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/03/15/75/3157506_cbb953ae.jpg",
         "kind": "detail",
@@ -33,10 +32,12 @@
       "fact": "Nicholas Hawksmoor's church was finished in 1714 after a storm wrecked the medieval one. General James Wolfe, killed at Quebec in 1759, is buried beneath the floor near the west door."
     },
     {
+      "id": "our-ladye-star-of-the-sea",
       "name": "Our Ladye Star of the Sea",
       "lat": 51.47635,
       "lon": -0.00595,
-      "clue": "Walk up Crooms Hill, with Greenwich Park on your left, to the Catholic church with the tall stone spire.",
+      "getThere": "From St Alfege, walk up Stockwell Street and on up Crooms Hill, with Greenwich Park on your left.",
+      "find": "Find the Catholic church with the tall stone spire. Stand back on the pavement so you can see the whole spire.",
       "question": "Look up at the spire. How many rows of small gabled windows ring it?",
       "exact": [
         "2",
@@ -48,11 +49,13 @@
       "fact": "William Wardell designed the church, which opened in 1851. Much of the inside is by A.W.N. Pugin, who also designed the interiors of the Houses of Parliament. It served Catholic pensioners of the Royal Naval Hospital."
     },
     {
+      "id": "ornc-chapel",
       "name": "Chapel of St Peter & St Paul",
       "lat": 51.4826,
       "lon": -0.00475,
       "inside": true,
-      "clue": "Head back down to the Old Royal Naval College. The chapel is under the eastern of the two domes, in Queen Mary Court, and is free to visit.",
+      "getThere": "Walk back down towards the river and the twin domes of the Old Royal Naval College.",
+      "find": "The chapel is under the eastern of the two domes, in Queen Mary Court, and is free to visit.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/02/43/17/2431799_833917d7.jpg",
         "kind": "view",
@@ -69,10 +72,12 @@
       "fact": "A fire gutted the chapel in 1779 and James 'Athenian' Stuart rebuilt it. Benjamin West painted the altarpiece, which shows a snake fastening onto Paul's hand as he gathers firewood."
     },
     {
+      "id": "trinity-hospital",
       "name": "Trinity Hospital",
       "lat": 51.48518,
       "lon": -0.00223,
-      "clue": "Walk east along the riverside path to the small white almshouse with a battlemented tower, beside the old power station. Its chapel is inside.",
+      "getThere": "Leave the College on its east side by College Way and follow narrow Crane Street along the river.",
+      "find": "Find the small white almshouse with a battlemented tower, beside the old power station. Look closely at the tower.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/08/13/62/8136280_996d1b36.jpg",
         "kind": "view",
@@ -91,9 +96,9 @@
   ],
   "legs": [
     {
-      "m": 212,
-      "s": 170,
-      "p": [[51.48177,-0.01043],[51.48178,-0.01035],[51.48177,-0.01021],[51.48177,-0.01017],[51.48169,-0.01019],[51.48165,-0.01019],[51.48161,-0.01018],[51.48153,-0.01015],[51.48151,-0.01015],[51.4815,-0.01013],[51.48147,-0.01012],[51.48145,-0.0101],[51.48141,-0.01008],[51.48139,-0.01006],[51.48136,-0.0101],[51.48134,-0.01012],[51.48133,-0.01014],[51.48131,-0.0101],[51.48128,-0.01007],[51.48095,-0.00975],[51.48087,-0.00968],[51.4808,-0.00961],[51.48077,-0.00954],[51.48074,-0.0095],[51.48072,-0.00946],[51.48067,-0.0094],[51.48065,-0.00937],[51.48062,-0.00935],[51.48059,-0.00933],[51.48056,-0.00932],[51.48045,-0.00931],[51.48041,-0.0093],[51.48036,-0.00931],[51.48036,-0.00954],[51.48036,-0.00954]]
+      "m": 949,
+      "s": 761,
+      "p": [[51.48529,-0.00222],[51.48541,-0.00238],[51.48531,-0.00259],[51.48519,-0.0026],[51.48487,-0.0032],[51.48484,-0.00324],[51.48482,-0.00328],[51.48419,-0.00283],[51.48415,-0.00282],[51.4841,-0.00281],[51.4839,-0.00284],[51.48388,-0.00284],[51.48379,-0.00283],[51.48377,-0.00283],[51.48375,-0.00286],[51.48374,-0.00287],[51.48365,-0.00315],[51.48359,-0.00335],[51.48355,-0.00354],[51.48354,-0.00354],[51.48352,-0.00352],[51.4835,-0.00351],[51.48349,-0.0035],[51.48348,-0.00351],[51.48321,-0.0033],[51.48296,-0.00311],[51.48294,-0.0031],[51.48294,-0.00312],[51.48292,-0.00317],[51.4829,-0.00322],[51.4829,-0.00324],[51.48288,-0.00325],[51.48287,-0.00327],[51.48285,-0.00332],[51.48236,-0.00477],[51.48176,-0.00655],[51.48174,-0.00662],[51.48156,-0.00715],[51.48134,-0.00778],[51.4813,-0.00792],[51.48129,-0.00795],[51.48129,-0.00799],[51.48129,-0.00802],[51.4813,-0.00805],[51.48133,-0.00808],[51.48132,-0.00811],[51.4813,-0.00817],[51.48129,-0.00822],[51.48128,-0.00824],[51.48123,-0.00822],[51.48121,-0.00822],[51.48119,-0.00824],[51.48106,-0.00863],[51.48086,-0.00922],[51.48086,-0.00926],[51.48087,-0.0093],[51.48085,-0.00931],[51.48083,-0.00932],[51.4808,-0.00934],[51.48076,-0.00934],[51.48075,-0.00937],[51.48074,-0.00941],[51.48073,-0.00944],[51.48072,-0.00946],[51.48067,-0.0094],[51.48065,-0.00937],[51.48062,-0.00935],[51.48059,-0.00933],[51.48056,-0.00932],[51.48045,-0.00931],[51.48041,-0.0093],[51.48036,-0.00931],[51.48036,-0.00954]]
     },
     {
       "m": 639,

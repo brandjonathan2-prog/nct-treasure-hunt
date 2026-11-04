@@ -38,14 +38,20 @@
     <h1 id="introTitle">Treasure Hunt</h1>
     <p class="sub" id="introSub"></p>
     <ol class="how">
-      <li><span><b>Follow the map</b> to each stop. Your phone's location shows where you are.</span></li>
+      <li><span><b>Start at any church</b> on the loop, or scan the QR code on a church notice board. Then follow the map round to the next one.</span></li>
       <li><span><b>Arrive</b> within <span id="introRadius">35</span> metres and the question unlocks.</span></li>
       <li><span><b>Look closely.</b> Use the photo to find the detail, then answer from what you can see. Hints cost points.</span></li>
     </ol>
-    <p class="startat" id="introStart"></p>
-    <button class="primary big" id="startBtn">Start the hunt</button>
-    <button class="link" id="testBtn">Try it at home (test mode)</button>
+    <p class="startat" id="introWhere"></p>
+    <button class="primary big" id="continueBtn" hidden>Continue</button>
+    <button class="primary big" id="startBtn">Start at the church nearest me</button>
     <p class="note" id="geoNote" hidden></p>
+    <div class="startlist" id="startListWrap">
+      <p class="startlist-label" id="startListLabel">Or choose where to start</p>
+      <ul id="startList"></ul>
+    </div>
+    <button class="link" id="testBtn">Try it at home (test mode)</button>
+    <p class="startat" id="introTransport"></p>
   </div>
 </main>
 
@@ -70,7 +76,7 @@
   <header class="bar">
     <h1 id="barTitle">Treasure Hunt</h1>
     <div class="stat"><b id="score">0</b>points</div>
-    <div class="stat"><b id="prog">1/7</b>stop</div>
+    <div class="stat"><b id="prog">1/6</b>church</div>
   </header>
   <div class="mapwrap">
     <div id="map" aria-label="Map of the hunt route"></div>

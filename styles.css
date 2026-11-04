@@ -57,6 +57,17 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .startat{margin:0;font-size:14px;color:var(--muted)}
 .startat b{color:var(--ink);font-weight:600}
 
+/* Start anywhere */
+.startlist{display:grid;gap:8px}
+.startlist-label{margin:4px 0 0;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.startlist ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.startlist button{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:600;padding:11px 14px}
+.startlist button span{font-family:var(--f-mono);font-size:12px;font-weight:400;color:var(--muted)}
+.here{margin:0;border:1.5px solid var(--chart);border-radius:8px;padding:12px 14px;display:grid;gap:4px}
+.here b{font-family:var(--f-display);font-size:24px;line-height:1.1;text-transform:uppercase}
+.getthere{margin:0;font-size:15px}
+.getthere b{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;font-weight:400}
+
 /* Photo clues */
 .photo{margin:0;display:grid;gap:6px}
 .photo-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--chart)}

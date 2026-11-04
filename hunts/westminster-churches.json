@@ -1,21 +1,20 @@
 {
   "id": "westminster-churches",
   "title": "Westminster Churches",
-  "subtitle": "6 stops · 3.3 km walk · about 90 minutes",
+  "subtitle": "Circular trail · 6 churches · 2.3–3.3 km walk · about 90 minutes",
   "area": "Westminster, London",
+  "loop": true,
   "radius": 40,
-  "finish": "You've toured six churches in the shadow of Parliament",
-  "start": {
-    "lat": 51.501,
-    "lon": -0.1249,
-    "label": "Westminster station (Bridge Street exit)"
-  },
+  "transport": "Westminster and St James's Park Underground stations are both close to the trail.",
+  "finish": "You've visited all six churches in the shadow of Parliament",
   "stops": [
     {
+      "id": "st-margarets",
       "name": "St Margaret's Church",
       "lat": 51.49985,
       "lon": -0.1268,
-      "clue": "Start at the small church beside Westminster Abbey, facing Parliament Square. Go to its north side near the east end and look above the door for a carved head.",
+      "getThere": "Walk up Lord North Street and along Great Peter Street to Millbank, then north along Abingdon Street past the Houses of Parliament.",
+      "find": "St Margaret's is the small church beside Westminster Abbey, facing Parliament Square. Go to its north side near the east end and look above the door for a carved head.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/03/92/76/3927672_08adccdb.jpg",
         "kind": "view",
@@ -32,11 +31,13 @@
       "fact": "St Margaret's has been the parish church of the Palace of Westminster since 1614. Winston Churchill married Clementine Hozier here in 1908, and Sir Walter Raleigh was buried here in 1618."
     },
     {
+      "id": "westminster-abbey",
       "name": "Westminster Abbey, West Door",
       "lat": 51.49945,
       "lon": -0.12925,
       "inside": false,
-      "clue": "Walk round to the Abbey's Great West Door, between the two towers. Look up above the arch at the row of ten modern statues.",
+      "getThere": "Walk along The Sanctuary, round the north-west corner of the Abbey, to its west front between the two towers.",
+      "find": "Look up above the Great West Door at the row of ten modern statues.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/08/44/25/8442543_d91d587e.jpg",
         "kind": "view",
@@ -54,10 +55,12 @@
       "fact": "The ten statues honour Christian martyrs of the 20th century from around the world, including Oscar Romero and Dietrich Bonhoeffer. They were unveiled on 9 July 1998."
     },
     {
+      "id": "methodist-central-hall",
       "name": "Methodist Central Hall",
       "lat": 51.49995,
       "lon": -0.13,
-      "clue": "Cross to the great domed hall facing the Abbey. Look for a plaque about a famous first meeting held here in 1946.",
+      "getThere": "Cross Broad Sanctuary to the great domed hall on the corner of Tothill Street.",
+      "find": "Look for a plaque about a famous first meeting held here in 1946.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/08/44/25/8442552_8d8f3a2f.jpg",
         "kind": "view",
@@ -81,10 +84,12 @@
       "fact": "The first UN General Assembly met here from 10 January to 14 February 1946. The hall is still a working Methodist church as well as a conference centre."
     },
     {
+      "id": "guards-chapel",
       "name": "The Guards' Chapel",
       "lat": 51.5003,
       "lon": -0.13585,
-      "clue": "Walk west along Birdcage Walk, with St James's Park on your right, to Wellington Barracks. Find the Guards' Chapel, with a statue in front of it, and look closely at the old railings.",
+      "getThere": "Walk west along Tothill Street, turn right through Queen Anne's Gate, then left along Birdcage Walk with St James's Park on your right, to Wellington Barracks.",
+      "find": "Find the Guards' Chapel, with a statue in front of it, and look closely at the old railings.",
       "photo": {
         "src": "https://s0.geograph.org.uk/photos/97/16/971660_6408ab5b.jpg",
         "kind": "detail",
@@ -101,10 +106,12 @@
       "fact": "On 18 June 1944 a V-1 flying bomb hit the chapel during the Sunday morning service, killing 121 people. Only the apse survived, with its candles still burning. Today's chapel was built in 1963."
     },
     {
+      "id": "westminster-cathedral",
       "name": "Westminster Cathedral",
       "lat": 51.4964,
       "lon": -0.13945,
-      "clue": "Head south to Victoria Street and find the piazza in front of the striped cathedral with its tall bell tower.",
+      "getThere": "Continue along Birdcage Walk, turn left into Buckingham Gate, then follow Stafford Place and Palace Street into Cathedral Walk, which leads to Victoria Street.",
+      "find": "Find the piazza in front of the striped cathedral with its tall bell tower.",
       "photo": {
         "src": "https://s0.geograph.org.uk/photos/78/53/785355_dbdabc25.jpg",
         "kind": "view",
@@ -121,10 +128,12 @@
       "fact": "This is England's largest Catholic church. John Francis Bentley designed it in a Byzantine style, and it was built from 1895 to 1903. The bell tower is 284 feet (87 m) tall."
     },
     {
+      "id": "smith-square-hall",
       "name": "Smith Square Hall",
       "lat": 51.49675,
       "lon": -0.12715,
-      "clue": "Walk east back towards Parliament to Smith Square. The building in the middle has a tower at each of its four corners.",
+      "getThere": "Walk east along Victoria Street, then take Old Pye Street, St Ann's Lane and Great Peter Street towards Parliament, and turn into Smith Square.",
+      "find": "The building in the middle of the square has a tower at each of its four corners.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/03/86/79/3867919_5b3b066e.jpg",
         "kind": "view",
@@ -143,9 +152,9 @@
   ],
   "legs": [
     {
-      "m": 368,
-      "s": 296,
-      "p": [[51.50099,-0.1249],[51.501,-0.12476],[51.50108,-0.12474],[51.50109,-0.12471],[51.50109,-0.12469],[51.50111,-0.12468],[51.50112,-0.12468],[51.50114,-0.12469],[51.50115,-0.12471],[51.50116,-0.12473],[51.50112,-0.12474],[51.50116,-0.12473],[51.50129,-0.12473],[51.50126,-0.12478],[51.50125,-0.12481],[51.50123,-0.12484],[51.50121,-0.12487],[51.50116,-0.12488],[51.50117,-0.12492],[51.5011,-0.12492],[51.50106,-0.12493],[51.50108,-0.12545],[51.50108,-0.12546],[51.50108,-0.12548],[51.50108,-0.12552],[51.50109,-0.12584],[51.50107,-0.12584],[51.50106,-0.12585],[51.501,-0.12585],[51.50091,-0.12586],[51.50089,-0.12586],[51.50087,-0.12585],[51.50079,-0.12597],[51.50074,-0.12598],[51.50066,-0.12598],[51.50063,-0.12599],[51.50061,-0.12599],[51.50059,-0.12599],[51.50054,-0.12599],[51.50052,-0.12599],[51.5005,-0.12599],[51.50036,-0.12601],[51.50015,-0.12602],[51.50015,-0.12608],[51.50015,-0.12611],[51.50016,-0.12614],[51.50017,-0.12619],[51.50015,-0.12622],[51.50013,-0.12628],[51.50011,-0.12634],[51.5001,-0.12636],[51.5001,-0.12637],[51.50001,-0.12635],[51.49983,-0.12634],[51.49969,-0.12631],[51.49969,-0.12635],[51.4997,-0.12665],[51.49971,-0.12683]]
+      "m": 469,
+      "s": 376,
+      "p": [[51.49675,-0.12713],[51.49694,-0.12714],[51.49696,-0.12664],[51.49698,-0.12579],[51.49702,-0.12579],[51.49705,-0.12579],[51.49743,-0.12583],[51.49753,-0.12584],[51.49756,-0.12584],[51.49759,-0.12585],[51.49761,-0.12585],[51.49766,-0.12585],[51.49826,-0.12583],[51.49852,-0.12591],[51.49867,-0.12595],[51.49871,-0.12596],[51.49872,-0.12597],[51.49875,-0.1262],[51.49878,-0.12624],[51.49914,-0.12618],[51.49916,-0.12618],[51.4992,-0.12617],[51.49923,-0.12616],[51.49934,-0.12619],[51.49946,-0.12623],[51.4995,-0.12625],[51.49969,-0.12631],[51.49969,-0.12635],[51.4997,-0.12665],[51.49971,-0.12683]]
     },
     {
       "m": 202,

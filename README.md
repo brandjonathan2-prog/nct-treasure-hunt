@@ -69,8 +69,10 @@ Each stop has:
 
 | Field | Meaning |
 |---|---|
+| `id` | Short permanent name used in QR code links, e.g. `st-margarets`. **Never change it once posters are printed.** |
 | `name`, `lat`, `lon` | The church and where to stand. Get coordinates by right-clicking in Google Maps. |
-| `clue` | How to find it and what to look for |
+| `getThere` | Directions from the previous church on the loop (the first church's directions come from the last one) |
+| `find` | What to look for once you're at the church |
 | `photo` | Optional photo clue (see below) |
 | `inside` | `true` if the answer is inside the church; shows a note about opening hours and services |
 | `question`, `hint`, `fact` | Asked on arrival; hint costs 25 points; fact shown after answering |
@@ -80,9 +82,27 @@ Answers are matched loosely: case, spaces and punctuation are ignored.
 - `"match": ["tail"]` accepts any answer *containing* "tail".
 - `"exact": ["1616"]` accepts only those answers (use it for numbers and dates).
 
+### Circular trails and starting anywhere
+
+Every hunt is a loop. Players can start at any church and carry on round until they've visited them all; they don't return to where they began.
+
+- **From the start screen:** "Start at the church nearest me" (uses GPS), or pick a church from the list.
+- **From a QR code:** `…/?hunt=westminster-churches&start=st-margarets` opens the hunt at that church, and the first question unlocks straight away.
+- Progress is saved on the phone, so players can stop and continue later.
+
+### QR posters
+
+`posters/` has a printable A4 poster for every church: QR code, trail name, distance and the route from that church. To regenerate them after changing a hunt:
+
+```
+python3 tools/make_posters.py https://brandjonathan2-prog.github.io/nct-treasure-hunt/ BarlowCondensed-Bold.ttf posters
+```
+
+Before printing posters to put up for real, move the app to a permanent web address (for example a National Churches Trust subdomain). The QR codes contain the full address, so renaming the repository would break every printed poster.
+
 ### Walking routes
 
-The map draws the walking route for each leg (start → stop 1, stop 1 → stop 2, …), worked out with the OpenStreetMap walking router (routing.openstreetmap.de). The routes are stored in each hunt file under `legs`, so they work offline and don't depend on the router.
+The map draws the walking route for each leg of the loop (`legs[k]` runs from the church before k to church k; `legs[0]` runs from the last church back to the first), worked out with the OpenStreetMap walking router (routing.openstreetmap.de). The routes are stored in each hunt file under `legs`, so they work offline and don't depend on the router.
 
 For a new hunt, leave `legs` out: the app asks the router for the routes the first time the hunt is played and keeps them on that phone. Ask Claude to calculate and store them in the file before you share a new hunt. If the router can't be reached, the map shows straight lines.
 
@@ -105,7 +125,7 @@ For a new hunt, leave `legs` out: the app asks the router for the routes the fir
 
 ### Photo check page
 
-Open the app with `?photos` on the end, e.g. `https://brandjonathan2-prog.github.io/nct-treasure-hunt/?photos`. It shows every stop's photo, clue, question and accepted answers on one page, so you can check them.
+Open the app with `?photos` on the end, e.g. `https://brandjonathan2-prog.github.io/nct-treasure-hunt/?photos`. It shows every church's photo, directions, question, accepted answers and QR code link on one page, so you can check them.
 
 ## Before going public
 - Walk the route once to check each clue is visible and each answer is right.
