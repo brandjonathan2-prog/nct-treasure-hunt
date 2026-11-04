@@ -1,67 +1,114 @@
 {
   "id": "greenwich-churches",
   "title": "Greenwich Churches",
-  "subtitle": "4 stops · about 2 km · 60 minutes",
+  "subtitle": "4 stops · 2.3 km walk · about 75 minutes",
   "area": "Greenwich, London",
   "radius": 40,
   "finish": "You've visited four Greenwich churches, from a Saxon martyr's shrine to a Jacobean almshouse",
-  "start": { "lat": 51.4817, "lon": -0.0104, "label": "Cutty Sark DLR station" },
+  "start": {
+    "lat": 51.4817,
+    "lon": -0.0104,
+    "label": "Cutty Sark DLR station"
+  },
   "stops": [
     {
       "name": "St Alfege Church",
-      "lat": 51.48045, "lon": -0.00964,
+      "lat": 51.48045,
+      "lon": -0.00964,
       "inside": true,
       "clue": "Start at St Alfege on Greenwich Church Street, built where Archbishop Alfege was killed by Danish raiders in 1012. Go inside and find the old keyboard in a glass case in the south-west corner.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/03/15/75/3157506_cbb953ae.jpg",
-        "kind": "detail", "caption": "Find this keyboard",
-        "credit": "John Salmon", "licence": "CC BY-SA 2.0",
+        "kind": "detail",
+        "caption": "Find this keyboard",
+        "credit": "John Salmon",
+        "licence": "CC BY-SA 2.0",
         "link": "https://www.geograph.org.uk/photo/3157506"
       },
       "question": "Some of these keys date from Tudor times. Which composer, buried in this church, probably played them?",
-      "match": ["tallis"],
+      "match": [
+        "tallis"
+      ],
       "hint": "He wrote Spem in alium, a motet for 40 voices.",
       "fact": "Nicholas Hawksmoor's church was finished in 1714 after a storm wrecked the medieval one. General James Wolfe, killed at Quebec in 1759, is buried beneath the floor near the west door."
     },
     {
       "name": "Our Ladye Star of the Sea",
-      "lat": 51.47635, "lon": -0.00595,
+      "lat": 51.47635,
+      "lon": -0.00595,
       "clue": "Walk up Crooms Hill, with Greenwich Park on your left, to the Catholic church with the tall stone spire.",
       "question": "Look up at the spire. How many rows of small gabled windows ring it?",
-      "exact": ["2", "two", "2rows", "tworows"],
+      "exact": [
+        "2",
+        "two",
+        "2rows",
+        "tworows"
+      ],
       "hint": "More than one, fewer than three.",
       "fact": "William Wardell designed the church, which opened in 1851. Much of the inside is by A.W.N. Pugin, who also designed the interiors of the Houses of Parliament. It served Catholic pensioners of the Royal Naval Hospital."
     },
     {
       "name": "Chapel of St Peter & St Paul",
-      "lat": 51.48260, "lon": -0.00475,
+      "lat": 51.4826,
+      "lon": -0.00475,
       "inside": true,
       "clue": "Head back down to the Old Royal Naval College. The chapel is under the eastern of the two domes, in Queen Mary Court, and is free to visit.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/02/43/17/2431799_833917d7.jpg",
-        "kind": "view", "caption": "The chapel",
-        "credit": "Paul Farmer", "licence": "CC BY-SA 2.0",
+        "kind": "view",
+        "caption": "The chapel",
+        "credit": "Paul Farmer",
+        "licence": "CC BY-SA 2.0",
         "link": "https://www.geograph.org.uk/photo/2431799"
       },
       "question": "The huge painting behind the altar shows St Paul shipwrecked on which island?",
-      "match": ["malta"],
+      "match": [
+        "malta"
+      ],
       "hint": "A Mediterranean island just south of Sicily.",
       "fact": "A fire gutted the chapel in 1779 and James 'Athenian' Stuart rebuilt it. Benjamin West painted the altarpiece, which shows a snake fastening onto Paul's hand as he gathers firewood."
     },
     {
       "name": "Trinity Hospital",
-      "lat": 51.48518, "lon": -0.00223,
+      "lat": 51.48518,
+      "lon": -0.00223,
       "clue": "Walk east along the riverside path to the small white almshouse with a battlemented tower, beside the old power station. Its chapel is inside.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/08/13/62/8136280_996d1b36.jpg",
-        "kind": "view", "caption": "Look out for this building",
-        "credit": "N Chadwick", "licence": "CC BY-SA 2.0",
+        "kind": "view",
+        "caption": "Look out for this building",
+        "credit": "N Chadwick",
+        "licence": "CC BY-SA 2.0",
         "link": "https://www.geograph.org.uk/photo/8136280"
       },
       "question": "The Latin inscription on the tower ends with a year. Which year?",
-      "exact": ["1616"],
+      "exact": [
+        "1616"
+      ],
       "hint": "The year Shakespeare died.",
       "fact": "Henry Howard, Earl of Northampton, founded the almshouse in 1613 for elderly men of Greenwich. Its chapel has early 16th-century Flemish stained glass showing the Crucifixion."
+    }
+  ],
+  "legs": [
+    {
+      "m": 212,
+      "s": 170,
+      "p": [[51.48177,-0.01043],[51.48178,-0.01035],[51.48177,-0.01021],[51.48177,-0.01017],[51.48169,-0.01019],[51.48165,-0.01019],[51.48161,-0.01018],[51.48153,-0.01015],[51.48151,-0.01015],[51.4815,-0.01013],[51.48147,-0.01012],[51.48145,-0.0101],[51.48141,-0.01008],[51.48139,-0.01006],[51.48136,-0.0101],[51.48134,-0.01012],[51.48133,-0.01014],[51.48131,-0.0101],[51.48128,-0.01007],[51.48095,-0.00975],[51.48087,-0.00968],[51.4808,-0.00961],[51.48077,-0.00954],[51.48074,-0.0095],[51.48072,-0.00946],[51.48067,-0.0094],[51.48065,-0.00937],[51.48062,-0.00935],[51.48059,-0.00933],[51.48056,-0.00932],[51.48045,-0.00931],[51.48041,-0.0093],[51.48036,-0.00931],[51.48036,-0.00954],[51.48036,-0.00954]]
+    },
+    {
+      "m": 639,
+      "s": 511,
+      "p": [[51.48036,-0.00954],[51.48036,-0.00954],[51.48036,-0.00931],[51.48033,-0.00932],[51.4803,-0.00934],[51.48028,-0.00936],[51.48006,-0.00959],[51.48004,-0.00961],[51.48004,-0.00964],[51.47998,-0.00968],[51.47992,-0.00974],[51.47989,-0.00973],[51.47985,-0.00975],[51.47978,-0.00981],[51.47977,-0.00978],[51.47975,-0.00971],[51.47973,-0.00964],[51.47972,-0.00961],[51.47982,-0.00952],[51.47998,-0.00937],[51.47999,-0.00934],[51.47998,-0.00929],[51.47957,-0.00851],[51.47947,-0.00831],[51.47946,-0.0083],[51.47944,-0.00828],[51.47942,-0.00823],[51.47939,-0.00819],[51.47939,-0.00818],[51.47939,-0.00816],[51.47938,-0.00814],[51.47934,-0.00808],[51.47928,-0.00801],[51.47919,-0.00792],[51.47907,-0.00782],[51.47886,-0.00765],[51.47856,-0.0074],[51.47854,-0.00739],[51.47851,-0.00737],[51.47849,-0.00734],[51.47837,-0.00719],[51.47827,-0.00705],[51.47812,-0.00678],[51.47804,-0.00658],[51.47796,-0.00642],[51.47789,-0.0063],[51.47788,-0.00629],[51.47787,-0.00628],[51.47785,-0.00625],[51.47782,-0.00622],[51.47781,-0.00621],[51.47781,-0.0062],[51.47776,-0.00616],[51.47758,-0.00605],[51.47739,-0.00598],[51.47728,-0.00596],[51.47692,-0.0059],[51.47669,-0.00586],[51.47637,-0.00577]]
+    },
+    {
+      "m": 934,
+      "s": 748,
+      "p": [[51.47637,-0.00577],[51.47669,-0.00586],[51.47692,-0.0059],[51.47728,-0.00596],[51.47739,-0.00598],[51.47758,-0.00605],[51.47776,-0.00616],[51.47781,-0.0062],[51.47781,-0.00621],[51.47782,-0.00622],[51.47785,-0.00625],[51.47787,-0.00628],[51.47788,-0.00629],[51.47789,-0.0063],[51.47796,-0.00642],[51.47804,-0.00658],[51.47812,-0.00678],[51.47827,-0.00705],[51.47837,-0.00719],[51.47849,-0.00734],[51.47851,-0.00737],[51.47854,-0.00739],[51.47856,-0.0074],[51.47858,-0.00736],[51.47859,-0.00731],[51.47856,-0.00728],[51.47857,-0.00727],[51.47858,-0.00725],[51.47866,-0.00722],[51.47889,-0.00716],[51.47892,-0.00715],[51.47898,-0.00713],[51.47904,-0.00711],[51.47907,-0.00711],[51.47923,-0.00706],[51.47942,-0.007],[51.47949,-0.00693],[51.47951,-0.00685],[51.47954,-0.00676],[51.47957,-0.00667],[51.47964,-0.00673],[51.47966,-0.00674],[51.47974,-0.00681],[51.47986,-0.00691],[51.47993,-0.00697],[51.47995,-0.007],[51.47998,-0.00702],[51.48012,-0.00714],[51.48028,-0.00728],[51.48045,-0.00677],[51.48078,-0.00702],[51.48087,-0.00709],[51.48088,-0.0071],[51.4809,-0.00705],[51.48093,-0.007],[51.48096,-0.00696],[51.48099,-0.00693],[51.48102,-0.0069],[51.48106,-0.00689],[51.4811,-0.00688],[51.48115,-0.00687],[51.4812,-0.00673],[51.48136,-0.00625],[51.48164,-0.00649],[51.48165,-0.00649],[51.48163,-0.00653],[51.48164,-0.00654],[51.48169,-0.00657],[51.48173,-0.00661],[51.48174,-0.00662],[51.48177,-0.00666],[51.48178,-0.00667],[51.48179,-0.00668],[51.48192,-0.00632],[51.48203,-0.00598],[51.48202,-0.0059],[51.48219,-0.00539],[51.48233,-0.00496],[51.48239,-0.0048],[51.48244,-0.00464],[51.48248,-0.00464],[51.48249,-0.00461],[51.4825,-0.00458],[51.48259,-0.00466],[51.48262,-0.00469]]
+    },
+    {
+      "m": 478,
+      "s": 383,
+      "p": [[51.48262,-0.00469],[51.4829,-0.00493],[51.4832,-0.00519],[51.4833,-0.00527],[51.48338,-0.00503],[51.48341,-0.00493],[51.48349,-0.0047],[51.4835,-0.0047],[51.48358,-0.00445],[51.48362,-0.00449],[51.48368,-0.00432],[51.48375,-0.0041],[51.48378,-0.00401],[51.4838,-0.00396],[51.48384,-0.00398],[51.48385,-0.00399],[51.48388,-0.00402],[51.48421,-0.00432],[51.48439,-0.00445],[51.48441,-0.0044],[51.48443,-0.00434],[51.48458,-0.00392],[51.48462,-0.0038],[51.48481,-0.00329],[51.48482,-0.00328],[51.48484,-0.00324],[51.48487,-0.0032],[51.48519,-0.0026],[51.48531,-0.00259],[51.48541,-0.00238],[51.48529,-0.00222]]
     }
   ]
 }

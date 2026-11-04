@@ -127,6 +127,8 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 12p
   background:var(--surface);color:var(--ink);border:2px solid var(--route);box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .pin.cur{background:var(--chart);border-color:var(--chart);color:var(--chart-ink);width:34px;height:34px;font-size:15px}
 .pin.done{background:var(--route);color:var(--surface)}
+.pin.start{width:24px;height:24px;font-size:11px;background:var(--surface);border-style:dashed}
+.legline{margin:0;font-size:13.5px;color:var(--muted)}
 .me{width:18px;height:18px;border-radius:50%;background:#2f7dd8;border:3px solid #fff;box-shadow:0 0 0 2px rgba(47,125,216,.35),0 1px 4px rgba(0,0,0,.4)}
 @media (prefers-reduced-motion: no-preference){
   .me{animation:ping 2s ease-out infinite}

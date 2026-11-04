@@ -137,7 +137,7 @@
   }
   function onPos(p) {
     pos = { lat: p.coords.latitude, lon: p.coords.longitude }; acc = p.coords.accuracy;
-    checkArrival(); if (map) { updateMe(); if (!followed) { followed = true; frame(); } render(); }
+    checkArrival(); if (map) { updateMe(); if (!followed) { followed = true; render(); refit(); } else render(); }
   }
   function geoFail(e) {
     $("startBtn").disabled = false; $("startBtn").textContent = "Start the hunt";
@@ -158,7 +158,7 @@
     mode = "test";
     if (watchId != null) navigator.geolocation.clearWatch(watchId);
     pos = pos || { lat: HUNT.start.lat, lon: HUNT.start.lon }; acc = 5;
-    enterGame(); updateMe(); frame();
+    enterGame(); updateMe(); refit();
   }
 
   /* ---------- Screen wake lock (keeps the map on while walking) ---------- */
@@ -173,16 +173,45 @@
       maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     map.setView([HUNT.stops[0].lat, HUNT.stops[0].lon], 16);
+    loadLegs();
     map.on("click", e => { if (mode === "test") { pos = { lat: e.latlng.lat, lon: e.latlng.lng }; acc = 5; updateMe(); checkArrival(); render(); } });
     $("recentre").onclick = frame;
+    if ("ResizeObserver" in window) new ResizeObserver(() => map.invalidateSize()).observe($("map"));
     drawRoute();
+  }
+  /* Walking route for each leg: legs[k] runs from the previous stop (or the start) to stop k.
+     Uses routes stored in the hunt file; otherwise asks the OpenStreetMap walking router once
+     and keeps the answer on the phone; otherwise falls back to straight lines. */
+  const LEGS_KEY = () => `nct-legs-${HUNT.id}-v1`;
+  let legs = null;
+  function legPoints(k) {
+    if (legs && legs[k] && legs[k].p) return legs[k].p;
+    const a = k === 0 ? HUNT.start : HUNT.stops[k - 1], b = HUNT.stops[k];
+    return [[a.lat, a.lon], [b.lat, b.lon]];
+  }
+  function loadLegs() {
+    if (HUNT.legs) { legs = HUNT.legs; return; }
+    try { const c = JSON.parse(localStorage.getItem(LEGS_KEY()) || "null"); if (c && c.length === HUNT.stops.length) { legs = c; return; } } catch (e) {}
+    const pts = [HUNT.start, ...HUNT.stops];
+    Promise.all(HUNT.stops.map((b, k) => {
+      const a = pts[k];
+      return fetch(`https://routing.openstreetmap.de/routed-foot/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson&steps=false`)
+        .then(r => r.json()).then(j => { const r = j.routes[0]; return { m: Math.round(r.distance), s: Math.round(r.duration), p: r.geometry.coordinates.map(c => [c[1], c[0]]) }; });
+    })).then(res => {
+      legs = res; try { localStorage.setItem(LEGS_KEY(), JSON.stringify(res)); } catch (e) {}
+      if (map) { drawRoute(); render(); }
+    }).catch(() => {}); // straight lines stay
   }
   function drawRoute() {
     Object.values(layers).forEach(l => l && map.removeLayer(l));
-    const st = HUNT.stops, ll = s => [s.lat, s.lon];
-    const done = st.slice(0, Math.min(S.i, st.length)).map(ll);
-    layers.todo = L.polyline(st.map(ll), { color: getVar("--route"), weight: 3, opacity: .45, dashArray: "6 8" }).addTo(map);
-    layers.done = done.length > 1 ? L.polyline(done, { color: getVar("--route"), weight: 4 }).addTo(map) : null;
+    const st = HUNT.stops, ll = s => [s.lat, s.lon], route = getVar("--route"), chart = getVar("--chart");
+    layers.paths = L.layerGroup(st.map((_, k) => {
+      const pts = legPoints(k);
+      if (k < S.i) return L.polyline(pts, { color: route, weight: 4, opacity: .75 });
+      if (k === S.i) return L.polyline(pts, { color: chart, weight: 6, opacity: .9, lineCap: "round", lineJoin: "round" });
+      return L.polyline(pts, { color: route, weight: 3, opacity: .4, dashArray: "6 8" });
+    })).addTo(map);
+    layers.start = L.marker(ll(HUNT.start), { icon: L.divIcon({ className: "", html: '<div class="pin start" title="Start">S</div>', iconSize: [24, 24], iconAnchor: [12, 12] }), keyboard: false, interactive: false }).addTo(map);
     layers.pins = L.layerGroup(st.map((s, k) => {
       const cls = k < S.i ? "done" : k === S.i ? "cur" : "";
       const size = cls === "cur" ? 34 : 28;
@@ -190,7 +219,7 @@
         zIndexOffset: cls === "cur" ? 500 : 0, keyboard: false });
     })).addTo(map);
     const cur = st[S.i];
-    layers.fence = cur ? L.circle(ll(cur), { radius: HUNT.radius, color: getVar("--chart"), weight: 1, fillOpacity: .12 }).addTo(map) : null;
+    layers.fence = cur ? L.circle(ll(cur), { radius: HUNT.radius, color: chart, weight: 1, fillOpacity: .12 }).addTo(map) : null;
     if (layers.me) layers.me.addTo(map);
   }
   function updateMe() {
@@ -199,10 +228,10 @@
     else layers.me.setLatLng([pos.lat, pos.lon]);
   }
   function frame() {
-    const cur = HUNT.stops[S.i] || HUNT.stops[HUNT.stops.length - 1];
-    const pts = [[cur.lat, cur.lon]];
-    if (pos && dist(pos, cur) < 5000) pts.push([pos.lat, pos.lon]);
-    if (pts.length === 1) map.setView(pts[0], 17); else map.fitBounds(pts, { padding: [70, 70], maxZoom: 18 });
+    const k = Math.min(S.i, HUNT.stops.length - 1);
+    const pts = legPoints(k).slice();
+    if (pos && dist(pos, HUNT.stops[k]) < 5000) pts.push([pos.lat, pos.lon]);
+    map.fitBounds(pts, { padding: [50, 50], maxZoom: 18 });
   }
   const getVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
@@ -224,7 +253,9 @@
     else { S.tries++; msg = { t: S.tries >= 3 ? "Not quite. Take a hint or skip this one." : "Not quite. Try again.", c: "bad" }; }
     save(); render();
   }
-  function next() { S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); if (S.i < HUNT.stops.length) frame(); render(); }
+  function next() { S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); render(); $("sheet").scrollTop = 0; if (S.i < HUNT.stops.length) refit(); }
+  // Frame the map after the sheet below it has settled to its new height
+  function refit() { requestAnimationFrame(() => { map.invalidateSize(); frame(); }); }
   function skip() { S.results.push({ name: HUNT.stops[S.i].name, pts: 0 }); S.solved = true; msg = { t: "Skipped. No points for this stop.", c: "bad" }; save(); render(); }
   function restart() { S = { ...fresh(), started: true }; msg = null; save(); checkArrival(); drawRoute(); frame(); render(); }
 
@@ -256,6 +287,8 @@
       h += `<div class="nav">${d == null ? `<span class="dir">Waiting for your location…</span>` :
         `<span class="arrow" style="transform:rotate(${Math.round(b)}deg)" aria-hidden="true">↑</span><span class="dist">${fmtDist(d)}</span><span class="dir">${compass(b)} · ${Math.round(b)}°</span>`}
         <a href="${gmaps}" target="_blank" rel="noopener">Directions ↗</a></div>`;
+      const leg = legs && legs[S.i];
+      if (leg && leg.m) h += `<p class="legline">Follow the magenta route: ${fmtDist(leg.m)} on foot from ${S.i === 0 ? esc(HUNT.start.label) : "the last stop"}, about ${Math.max(1, Math.round(leg.s / 60))} min.</p>`;
       if (d != null && d > 3000 && mode === "live") h += `<p class="locked">You're ${fmtDist(d)} from this stop. Head to ${esc(HUNT.start.label)} to begin, or use test mode to try it from here.</p>`;
       else h += `<p class="locked">The question unlocks when you're within ${HUNT.radius} m of this stop.</p>`;
       if (msg && msg.c === "bad") h += `<p class="msg bad">${esc(msg.t)}</p>`;
@@ -277,7 +310,7 @@
     on("hintB", () => { S.hint = true; save(); render(); });
     on("skipB", skip); on("allB", () => goTo("")); on("nextB", next); on("testB2", startTest);
     on("restartB", () => { const x = $("restartB"); if (x.dataset.sure) restart(); else { x.dataset.sure = 1; x.textContent = "Tap again to restart"; } });
-    on("jumpB", () => { pos = { lat: s.lat - 0.00012, lon: s.lon + 0.00008 }; acc = 5; updateMe(); checkArrival(); frame(); render(); });
+    on("jumpB", () => { pos = { lat: s.lat - 0.00012, lon: s.lon + 0.00008 }; acc = 5; updateMe(); checkArrival(); render(); refit(); });
   }
 
   /* ---------- Add to Home Screen ---------- */

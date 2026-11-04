@@ -80,6 +80,12 @@ Answers are matched loosely: case, spaces and punctuation are ignored.
 - `"match": ["tail"]` accepts any answer *containing* "tail".
 - `"exact": ["1616"]` accepts only those answers (use it for numbers and dates).
 
+### Walking routes
+
+The map draws the walking route for each leg (start → stop 1, stop 1 → stop 2, …), worked out with the OpenStreetMap walking router (routing.openstreetmap.de). The routes are stored in each hunt file under `legs`, so they work offline and don't depend on the router.
+
+For a new hunt, leave `legs` out: the app asks the router for the routes the first time the hunt is played and keeps them on that phone. Ask Claude to calculate and store them in the file before you share a new hunt. If the router can't be reached, the map shows straight lines.
+
 ### Photo clues
 
 ```json
