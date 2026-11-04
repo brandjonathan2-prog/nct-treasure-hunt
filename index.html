@@ -19,28 +19,40 @@
 </head>
 <body>
 
-<!-- Start screen -->
-<main class="intro" id="intro">
+<!-- Hunt chooser -->
+<main class="intro" id="chooser" hidden>
   <div class="intro-inner">
     <p class="kicker">NCS Treasure Hunt</p>
-    <h1 id="introTitle">Greenwich Meridian Hunt</h1>
-    <p class="sub" id="introSub">7 stops · about 2.4 km · 90 minutes</p>
+    <h1>Choose a hunt</h1>
+    <p class="sub">Walking trails with clues to find and questions to answer.</p>
+    <ul class="hunts" id="huntList"><li class="hunt-loading">Loading hunts…</li></ul>
+    <div class="install" id="install" hidden></div>
+  </div>
+</main>
+
+<!-- Start screen for one hunt -->
+<main class="intro" id="intro" hidden>
+  <div class="intro-inner">
+    <button class="link back" id="backBtn">← All hunts</button>
+    <p class="kicker">NCS Treasure Hunt</p>
+    <h1 id="introTitle">Treasure Hunt</h1>
+    <p class="sub" id="introSub"></p>
     <ol class="how">
       <li><span><b>Follow the map</b> to each stop. Your phone's location shows where you are.</span></li>
-      <li><span><b>Arrive</b> within 35 metres and the question unlocks.</span></li>
+      <li><span><b>Arrive</b> within <span id="introRadius">35</span> metres and the question unlocks.</span></li>
       <li><span><b>Answer</b> from what you can see. Hints cost points.</span></li>
     </ol>
+    <p class="startat" id="introStart"></p>
     <button class="primary big" id="startBtn">Start the hunt</button>
     <button class="link" id="testBtn">Try it at home (test mode)</button>
     <p class="note" id="geoNote" hidden></p>
-    <div class="install" id="install" hidden></div>
   </div>
 </main>
 
 <!-- Game screen -->
 <div class="app" id="app" hidden>
   <header class="bar">
-    <h1 id="barTitle">Greenwich Meridian Hunt</h1>
+    <h1 id="barTitle">Treasure Hunt</h1>
     <div class="stat"><b id="score">0</b>points</div>
     <div class="stat"><b id="prog">1/7</b>stop</div>
   </header>

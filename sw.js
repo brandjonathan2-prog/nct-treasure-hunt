@@ -1,10 +1,10 @@
 /* Service worker: keeps the app working with a weak signal in the park.
    App files are cached on install; map tiles you've viewed are cached as you go. */
-const VERSION = "v1";
+const VERSION = "v2";
 const APP = `ncs-app-${VERSION}`, TILES = "ncs-tiles";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
-  "hunts/greenwich.json", "fonts/barlow-condensed-latin-700-normal.woff2",
+  "hunts/index.json", "hunts/greenwich.json", "hunts/westminster-churches.json", "fonts/barlow-condensed-latin-700-normal.woff2",
   "vendor/leaflet/leaflet.js", "vendor/leaflet/leaflet.css",
   "icons/icon-192.png", "icons/apple-touch-icon.png"
 ];

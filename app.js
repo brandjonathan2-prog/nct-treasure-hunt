@@ -5,7 +5,9 @@
 
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
-  const HUNT_ID = (params.get("hunt") || "greenwich").replace(/[^a-z0-9-]/gi, "");
+  const HUNT_ID = (params.get("hunt") || "").replace(/[^a-z0-9-]/gi, "");
+  const keyFor = id => `ncs-hunt-${id}-v1`;
+  const goTo = id => { location.href = id ? `?hunt=${encodeURIComponent(id)}` : location.pathname; };
 
   /* ---------- Geo helpers ---------- */
   const R = 6371000, rad = d => d * Math.PI / 180;
@@ -25,7 +27,7 @@
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   /* ---------- State (saved on the phone so a closed tab can resume) ---------- */
-  const KEY = `ncs-hunt-${HUNT_ID}-v1`;
+  const KEY = keyFor(HUNT_ID);
   const fresh = () => ({ i: 0, score: 0, unlocked: false, tries: 0, hint: false, solved: false, results: [], started: false });
   let S = fresh();
   try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
@@ -34,18 +36,47 @@
   let HUNT, map, layers = {}, pos = null, acc = null, mode = "none", watchId = null, msg = null, followed = false;
 
   /* ---------- Boot ---------- */
-  fetch(`hunts/${HUNT_ID}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  const getJSON = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  setupInstall();
+  if (!HUNT_ID) initChooser();
+  else getJSON(`hunts/${HUNT_ID}.json`)
     .then(h => { HUNT = h; initIntro(); })
-    .catch(() => { $("geoNote").hidden = false; $("geoNote").textContent = "This hunt couldn't be loaded. Check your connection and reload the page."; });
+    .catch(() => { $("intro").hidden = false; $("geoNote").hidden = false; $("introTitle").textContent = "Hunt not found";
+      $("geoNote").textContent = "This hunt couldn't be loaded. Check your connection, or go back to the list of hunts."; });
+  $("backBtn").onclick = () => goTo("");
+
+  /* ---------- Hunt chooser ---------- */
+  function initChooser() {
+    $("chooser").hidden = false;
+    const list = $("huntList");
+    getJSON("hunts/index.json")
+      .then(ix => Promise.all(ix.hunts.map(id => getJSON(`hunts/${id}.json`).catch(() => null))))
+      .then(hunts => {
+        list.innerHTML = "";
+        hunts.filter(Boolean).forEach(h => {
+          let p = null; try { p = JSON.parse(localStorage.getItem(keyFor(h.id)) || "null"); } catch (e) {}
+          const n = h.stops.length;
+          const state = !p || !p.started ? "" : p.i >= n ? `<span class="state done">Completed · ${p.score} points</span>`
+            : `<span class="state going">In progress · stop ${p.i + 1} of ${n}</span>`;
+          const li = document.createElement("li");
+          li.innerHTML = `<button class="hunt-card"><span class="area">${esc(h.area || "")}</span><span class="name">${esc(h.title)}</span><span class="meta">${esc(h.subtitle)}</span>${state}</button>`;
+          li.firstChild.onclick = () => goTo(h.id);
+          list.appendChild(li);
+        });
+      })
+      .catch(() => { list.innerHTML = `<li class="hunt-loading">The hunts couldn't be loaded. Check your connection and reload the page.</li>`; });
+  }
 
   function initIntro() {
     document.title = `${HUNT.title} · NCS Treasure Hunt`;
     $("introTitle").textContent = HUNT.title; $("barTitle").textContent = HUNT.title;
     $("introSub").textContent = HUNT.subtitle;
+    $("introRadius").textContent = HUNT.radius;
+    $("introStart").innerHTML = `Start at <b>${esc(HUNT.start.label)}</b>.`;
+    $("intro").hidden = false;
     if (S.started && S.i > 0) $("startBtn").textContent = `Continue from stop ${Math.min(S.i + 1, HUNT.stops.length)}`;
     $("startBtn").onclick = startLive;
     $("testBtn").onclick = startTest;
-    setupInstall();
   }
 
   function enterGame() {
@@ -172,10 +203,10 @@
     if (S.i >= st.length) {
       el.className = "sheet done";
       el.innerHTML = `<div class="eyebrow"><span>Hunt complete</span><span>${S.score} / ${st.length * 100}</span></div>
-        <h2>You reached the Prime Meridian</h2>
+        <h2>${esc(HUNT.finish || "Hunt complete")}</h2>
         <ul class="log">${S.results.map((r, k) => `<li><span>${k + 1}. ${esc(r.name)}</span><span>${r.pts}</span></li>`).join("")}</ul>
-        <div class="tools"><button id="againB">Play again</button></div>`;
-      $("againB").onclick = restart; return;
+        <div class="tools"><button id="againB">Play again</button><button class="primary" id="allB">Choose another hunt</button></div>`;
+      $("againB").onclick = restart; $("allB").onclick = () => goTo(""); return;
     }
     el.className = "sheet";
     const s = st[S.i], d = pos ? dist(pos, s) : null, b = pos ? bearing(pos, s) : 0;
@@ -199,13 +230,13 @@
       h += `${msg ? `<p class="msg ${msg.c}">${esc(msg.t)}</p>` : ""}<p class="fact">${esc(s.fact)}</p>
         <div class="row"><button class="primary" id="nextB">${S.i === st.length - 1 ? "Finish" : "Next stop →"}</button></div>`;
     }
-    h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}<button class="link" id="restartB">Restart</button></div>`;
+    h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}<button class="link" id="restartB">Restart</button><button class="link" id="allB">All hunts</button></div>`;
     el.innerHTML = h;
 
     const on = (id, fn) => { const x = $(id); if (x) x.onclick = fn; };
     const f = $("qf"); if (f) f.onsubmit = e => { e.preventDefault(); $("ans").blur(); answer($("ans").value); };
     on("hintB", () => { S.hint = true; save(); render(); });
-    on("skipB", skip); on("nextB", next); on("testB2", startTest);
+    on("skipB", skip); on("allB", () => goTo("")); on("nextB", next); on("testB2", startTest);
     on("restartB", () => { const x = $("restartB"); if (x.dataset.sure) restart(); else { x.dataset.sure = 1; x.textContent = "Tap again to restart"; } });
     on("jumpB", () => { pos = { lat: s.lat - 0.00012, lon: s.lon + 0.00008 }; acc = 5; updateMe(); checkArrival(); frame(); render(); });
   }

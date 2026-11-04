@@ -42,6 +42,21 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .install{font-size:14px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:12px;display:grid;gap:8px}
 .install b{color:var(--ink)}
 
+/* Hunt chooser */
+.hunts{list-style:none;margin:6px 0 4px;padding:0;display:grid;gap:12px}
+.hunt-loading{color:var(--muted);font-size:14px}
+.hunt-card{display:grid;gap:4px;width:100%;text-align:left;font-weight:400;padding:14px 16px;border:1.5px solid var(--ink);border-radius:8px;background:transparent;color:var(--ink)}
+.hunt-card:hover{border-color:var(--chart)}
+.hunt-card .area{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--chart)}
+.hunt-card .name{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1.05;text-transform:uppercase}
+.hunt-card .meta{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.hunt-card .state{justify-self:start;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;margin-top:4px;border:1px solid var(--line);color:var(--muted)}
+.hunt-card .state.going{border-color:var(--chart);color:var(--chart)}
+.hunt-card .state.done{border-color:var(--ok);color:var(--ok)}
+.back{justify-self:start;padding:0;font-size:14px}
+.startat{margin:0;font-size:14px;color:var(--muted)}
+.startat b{color:var(--ink);font-weight:600}
+
 /* Game */
 .app{height:100%;display:grid;grid-template-rows:auto minmax(180px,1fr) auto}
 .bar{display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);
@@ -50,7 +65,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .stat{text-align:right;font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.15;font-variant-numeric:tabular-nums}
 .stat b{display:block;font-size:18px;color:var(--ink)}
 .mapwrap{position:relative;min-height:0}
-#map{position:absolute;inset:0;background:#e9e4d4}
+#map{position:absolute;inset:0;background:var(--line)}
 .leaflet-tile-pane{filter:var(--tile-filter)}
 .leaflet-container{font-family:var(--f-body)}
 .mode{position:absolute;z-index:500;right:max(10px,env(safe-area-inset-right));top:10px;display:flex;gap:6px;align-items:center;
