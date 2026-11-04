@@ -43,7 +43,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .install b{color:var(--ink)}
 
 /* Logo slot: shows brand/logo.png when it exists */
-.brandlogo{display:block;max-height:56px;max-width:220px;width:auto;margin-bottom:4px}
+.brandlogo{display:block;max-height:64px;max-width:220px;width:auto;margin-bottom:4px}
 
 /* Hunt chooser */
 .hunts{list-style:none;margin:6px 0 4px;padding:0;display:grid;gap:12px}

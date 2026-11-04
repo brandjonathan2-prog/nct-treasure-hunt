@@ -92,7 +92,7 @@ Every hunt is a loop. Players can start at any church and carry on round until t
 
 ### Logo
 
-The app has a space for the National Churches Trust logo, but doesn't include it. Once the Trust has provided its logo and agreed to its use, save it as `brand/logo.png` (a PNG with a transparent or white background, about 400 px wide). It then appears automatically on the start screens, and on the posters the next time they're regenerated. The colour scheme is red; the main colour is `--chart` in `styles.css`.
+The app has a space for the National Churches Trust logo. For now `brand/logo.png` is a placeholder (a red circle saying "NOT a real logo", drawn from `brand/logo.svg`). Once the Trust has provided its logo and agreed to its use, replace `brand/logo.png` with it (a PNG with a transparent or white background, about 400 px wide). It then appears automatically on the start screens, and on the posters the next time they're regenerated. The colour scheme is red; the main colour is `--chart` in `styles.css`.
 
 ### QR posters
 

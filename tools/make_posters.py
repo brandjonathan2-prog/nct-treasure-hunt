@@ -60,8 +60,8 @@ def poster(c, hunt, k):
     c.setFont("Helvetica", 11); c.drawString(M, H - 25.5 * mm, "A church trail on foot · free · on your phone")
     logo = os.path.join(HERE, "..", "brand", "logo.png")
     if os.path.exists(logo):  # the Trust's logo, once they've provided it
-        c.setFillColor(white); c.roundRect(W - M - 52 * mm, H - 27 * mm, 52 * mm, 24 * mm, 2 * mm, stroke=0, fill=1)
-        c.drawImage(logo, W - M - 50 * mm, H - 25 * mm, 48 * mm, 20 * mm, preserveAspectRatio=True, mask="auto")
+        c.setFillColor(white); c.circle(W - M - 12 * mm, H - 15 * mm, 13 * mm, stroke=0, fill=1)
+        c.drawImage(logo, W - M - 24 * mm, H - 27 * mm, 24 * mm, 24 * mm, preserveAspectRatio=True, mask="auto")
     else:
         c.setFont("Display", 16); c.drawRightString(W - M, H - 19 * mm, hunt["title"].upper())
 

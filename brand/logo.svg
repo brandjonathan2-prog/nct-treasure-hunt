@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <circle cx="200" cy="200" r="192" fill="#b51f24"/>
+  <circle cx="200" cy="200" r="168" fill="none" stroke="#fff" stroke-width="6"/>
+  <text x="200" y="252" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="150" letter-spacing="6" fill="#fff">NOT</text>
+  <text x="200" y="300" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" letter-spacing="5" fill="#fff">A REAL LOGO</text>
+</svg>

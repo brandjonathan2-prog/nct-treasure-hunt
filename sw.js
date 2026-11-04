@@ -1,12 +1,12 @@
 /* Service worker: keeps the app working with a weak signal in the park.
    App files are cached on install; map tiles you've viewed are cached as you go. */
-const VERSION = "v7";
+const VERSION = "v8";
 const APP = `nct-app-${VERSION}`, TILES = "nct-tiles", PHOTOS = "nct-photos";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "hunts/index.json", "hunts/greenwich-churches.json", "hunts/westminster-churches.json", "fonts/barlow-condensed-latin-700-normal.woff2",
   "vendor/leaflet/leaflet.js", "vendor/leaflet/leaflet.css",
-  "icons/icon-192.png", "icons/apple-touch-icon.png"
+  "icons/icon-192.png", "icons/apple-touch-icon.png", "brand/logo.png"
 ];
 const MAX_TILES = 400;
 
