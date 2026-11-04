@@ -1,10 +1,10 @@
 /* Service worker: keeps the app working with a weak signal in the park.
    App files are cached on install; map tiles you've viewed are cached as you go. */
-const VERSION = "v2";
-const APP = `ncs-app-${VERSION}`, TILES = "ncs-tiles";
+const VERSION = "v3";
+const APP = `ncs-app-${VERSION}`, TILES = "ncs-tiles", PHOTOS = "ncs-photos";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
-  "hunts/index.json", "hunts/greenwich.json", "hunts/westminster-churches.json", "fonts/barlow-condensed-latin-700-normal.woff2",
+  "hunts/index.json", "hunts/greenwich-churches.json", "hunts/westminster-churches.json", "fonts/barlow-condensed-latin-700-normal.woff2",
   "vendor/leaflet/leaflet.js", "vendor/leaflet/leaflet.css",
   "icons/icon-192.png", "icons/apple-touch-icon.png"
 ];
@@ -35,6 +35,18 @@ self.addEventListener("fetch", e => {
         if (hit) return hit;
         throw err;
       }
+    }));
+    return;
+  }
+
+  // Clue photos: keep a copy once seen, so they show with a weak signal
+  if (url.hostname.endsWith("geograph.org.uk")) {
+    e.respondWith(caches.open(PHOTOS).then(async c => {
+      const hit = await c.match(e.request);
+      if (hit) return hit;
+      const res = await fetch(e.request);
+      if (res.ok || res.type === "opaque") c.put(e.request, res.clone());
+      return res;
     }));
     return;
   }

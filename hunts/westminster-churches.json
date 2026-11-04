@@ -5,59 +5,138 @@
   "area": "Westminster, London",
   "radius": 40,
   "finish": "You've toured six churches in the shadow of Parliament",
-  "start": { "lat": 51.5010, "lon": -0.1249, "label": "Westminster station (Bridge Street exit)" },
+  "start": {
+    "lat": 51.501,
+    "lon": -0.1249,
+    "label": "Westminster station (Bridge Street exit)"
+  },
   "stops": [
     {
       "name": "St Margaret's Church",
-      "lat": 51.49985, "lon": -0.12680,
+      "lat": 51.49985,
+      "lon": -0.1268,
       "clue": "Start at the small church beside Westminster Abbey, facing Parliament Square. Go to its north side near the east end and look above the door for a carved head.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/03/92/76/3927672_08adccdb.jpg",
+        "kind": "view",
+        "caption": "St Margaret's, with Big Ben behind",
+        "credit": "Thomas Nugent",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/3927672"
+      },
       "question": "The bust stares across the road at Oliver Cromwell's statue. It shows the king whose death warrant Cromwell signed. Which king?",
-      "match": ["charles"],
+      "match": [
+        "charles"
+      ],
       "hint": "He was beheaded on Whitehall in 1649.",
       "fact": "St Margaret's has been the parish church of the Palace of Westminster since 1614. Winston Churchill married Clementine Hozier here in 1908, and Sir Walter Raleigh was buried here in 1618."
     },
     {
       "name": "Westminster Abbey, West Door",
-      "lat": 51.49945, "lon": -0.12925,
+      "lat": 51.49945,
+      "lon": -0.12925,
+      "inside": false,
       "clue": "Walk round to the Abbey's Great West Door, between the two towers. Look up above the arch at the row of ten modern statues.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/08/44/25/8442543_d91d587e.jpg",
+        "kind": "view",
+        "caption": "The Abbey's west front",
+        "credit": "Colin Smith",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/8442543"
+      },
       "question": "The fifth statue from the left is an American civil rights leader. What was his surname?",
-      "match": ["king", "luther"],
+      "match": [
+        "king",
+        "luther"
+      ],
       "hint": "“I have a dream…”",
       "fact": "The ten statues honour Christian martyrs of the 20th century from around the world, including Oscar Romero and Dietrich Bonhoeffer. They were unveiled on 9 July 1998."
     },
     {
       "name": "Methodist Central Hall",
-      "lat": 51.49995, "lon": -0.13000,
+      "lat": 51.49995,
+      "lon": -0.13,
       "clue": "Cross to the great domed hall facing the Abbey. Look for a plaque about a famous first meeting held here in 1946.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/08/44/25/8442552_8d8f3a2f.jpg",
+        "kind": "view",
+        "caption": "Look out for this building",
+        "credit": "Colin Smith",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/8442552"
+      },
       "question": "Which organisation held the first meeting of its General Assembly here?",
-      "exact": ["un", "uno", "unitednations", "theunitednations", "unitednationsorganisation", "unitednationsorganization", "unga", "unitednationsgeneralassembly"],
+      "exact": [
+        "un",
+        "uno",
+        "unitednations",
+        "theunitednations",
+        "unitednationsorganisation",
+        "unitednationsorganization",
+        "unga",
+        "unitednationsgeneralassembly"
+      ],
       "hint": "Its headquarters is now in New York.",
       "fact": "The first UN General Assembly met here from 10 January to 14 February 1946. The hall is still a working Methodist church as well as a conference centre."
     },
     {
       "name": "The Guards' Chapel",
-      "lat": 51.50030, "lon": -0.13585,
-      "clue": "Walk west along Birdcage Walk, with St James's Park on your right, to Wellington Barracks. Find the Guards' Chapel and look closely at the old railings outside.",
+      "lat": 51.5003,
+      "lon": -0.13585,
+      "clue": "Walk west along Birdcage Walk, with St James's Park on your right, to Wellington Barracks. Find the Guards' Chapel, with a statue in front of it, and look closely at the old railings.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/photos/97/16/971660_6408ab5b.jpg",
+        "kind": "detail",
+        "caption": "Find this statue outside the chapel",
+        "credit": "Robin Sones",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/971660"
+      },
       "question": "The railings carry the royal cypher W IV R, left from the 1838 chapel. What was the king's name?",
-      "match": ["william"],
+      "match": [
+        "william"
+      ],
       "hint": "The sailor king, uncle of Queen Victoria.",
       "fact": "On 18 June 1944 a V-1 flying bomb hit the chapel during the Sunday morning service, killing 121 people. Only the apse survived, with its candles still burning. Today's chapel was built in 1963."
     },
     {
       "name": "Westminster Cathedral",
-      "lat": 51.49640, "lon": -0.13945,
+      "lat": 51.4964,
+      "lon": -0.13945,
       "clue": "Head south to Victoria Street and find the piazza in front of the striped cathedral with its tall bell tower.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/photos/78/53/785355_dbdabc25.jpg",
+        "kind": "view",
+        "caption": "Look out for this building",
+        "credit": "Rob Farrow",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/785355"
+      },
       "question": "The red brick is banded with stripes of a pale stone named after a place in Dorset. Which stone?",
-      "match": ["portland"],
+      "match": [
+        "portland"
+      ],
       "hint": "It's also the name of a city in Oregon.",
       "fact": "This is England's largest Catholic church. John Francis Bentley designed it in a Byzantine style, and it was built from 1895 to 1903. The bell tower is 284 feet (87 m) tall."
     },
     {
       "name": "Smith Square Hall",
-      "lat": 51.49675, "lon": -0.12715,
+      "lat": 51.49675,
+      "lon": -0.12715,
       "clue": "Walk east back towards Parliament to Smith Square. The building in the middle has a tower at each of its four corners.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/03/86/79/3867919_5b3b066e.jpg",
+        "kind": "view",
+        "caption": "Look out for this building",
+        "credit": "Len Williams",
+        "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/3867919"
+      },
       "question": "Legend says Queen Anne showed the architect what she wanted by kicking over a piece of furniture. What was it?",
-      "match": ["stool"],
+      "match": [
+        "stool"
+      ],
       "hint": "Somewhere to rest your feet.",
       "fact": "Thomas Archer built it as St John's church between 1713 and 1728. Bombed out in the Blitz, it reopened as a concert hall in 1969 and was renamed Smith Square Hall in 2024."
     }

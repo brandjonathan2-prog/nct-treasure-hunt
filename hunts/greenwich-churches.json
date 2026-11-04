@@ -1,0 +1,67 @@
+{
+  "id": "greenwich-churches",
+  "title": "Greenwich Churches",
+  "subtitle": "4 stops · about 2 km · 60 minutes",
+  "area": "Greenwich, London",
+  "radius": 40,
+  "finish": "You've visited four Greenwich churches, from a Saxon martyr's shrine to a Jacobean almshouse",
+  "start": { "lat": 51.4817, "lon": -0.0104, "label": "Cutty Sark DLR station" },
+  "stops": [
+    {
+      "name": "St Alfege Church",
+      "lat": 51.48045, "lon": -0.00964,
+      "inside": true,
+      "clue": "Start at St Alfege on Greenwich Church Street, built where Archbishop Alfege was killed by Danish raiders in 1012. Go inside and find the old keyboard in a glass case in the south-west corner.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/03/15/75/3157506_cbb953ae.jpg",
+        "kind": "detail", "caption": "Find this keyboard",
+        "credit": "John Salmon", "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/3157506"
+      },
+      "question": "Some of these keys date from Tudor times. Which composer, buried in this church, probably played them?",
+      "match": ["tallis"],
+      "hint": "He wrote Spem in alium, a motet for 40 voices.",
+      "fact": "Nicholas Hawksmoor's church was finished in 1714 after a storm wrecked the medieval one. General James Wolfe, killed at Quebec in 1759, is buried beneath the floor near the west door."
+    },
+    {
+      "name": "Our Ladye Star of the Sea",
+      "lat": 51.47635, "lon": -0.00595,
+      "clue": "Walk up Crooms Hill, with Greenwich Park on your left, to the Catholic church with the tall stone spire.",
+      "question": "Look up at the spire. How many rows of small gabled windows ring it?",
+      "exact": ["2", "two", "2rows", "tworows"],
+      "hint": "More than one, fewer than three.",
+      "fact": "William Wardell designed the church, which opened in 1851. Much of the inside is by A.W.N. Pugin, who also designed the interiors of the Houses of Parliament. It served Catholic pensioners of the Royal Naval Hospital."
+    },
+    {
+      "name": "Chapel of St Peter & St Paul",
+      "lat": 51.48260, "lon": -0.00475,
+      "inside": true,
+      "clue": "Head back down to the Old Royal Naval College. The chapel is under the eastern of the two domes, in Queen Mary Court, and is free to visit.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/02/43/17/2431799_833917d7.jpg",
+        "kind": "view", "caption": "The chapel",
+        "credit": "Paul Farmer", "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/2431799"
+      },
+      "question": "The huge painting behind the altar shows St Paul shipwrecked on which island?",
+      "match": ["malta"],
+      "hint": "A Mediterranean island just south of Sicily.",
+      "fact": "A fire gutted the chapel in 1779 and James 'Athenian' Stuart rebuilt it. Benjamin West painted the altarpiece, which shows a snake fastening onto Paul's hand as he gathers firewood."
+    },
+    {
+      "name": "Trinity Hospital",
+      "lat": 51.48518, "lon": -0.00223,
+      "clue": "Walk east along the riverside path to the small white almshouse with a battlemented tower, beside the old power station. Its chapel is inside.",
+      "photo": {
+        "src": "https://s0.geograph.org.uk/geophotos/08/13/62/8136280_996d1b36.jpg",
+        "kind": "view", "caption": "Look out for this building",
+        "credit": "N Chadwick", "licence": "CC BY-SA 2.0",
+        "link": "https://www.geograph.org.uk/photo/8136280"
+      },
+      "question": "The Latin inscription on the tower ends with a year. Which year?",
+      "exact": ["1616"],
+      "hint": "The year Shakespeare died.",
+      "fact": "Henry Howard, Earl of Northampton, founded the almshouse in 1613 for elderly men of Greenwich. Its chapel has early 16th-century Flemish stained glass showing the Crucifixion."
+    }
+  ]
+}

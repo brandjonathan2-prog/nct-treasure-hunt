@@ -57,6 +57,29 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .startat{margin:0;font-size:14px;color:var(--muted)}
 .startat b{color:var(--ink);font-weight:600}
 
+/* Photo clues */
+.photo{margin:0;display:grid;gap:6px}
+.photo-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--chart)}
+.photo-btn{padding:0;border:1.5px solid var(--ink);border-radius:6px;overflow:hidden;display:block;width:100%;background:var(--line);cursor:zoom-in}
+.photo-btn img{display:block;width:100%;max-height:24vh;max-height:24dvh;object-fit:cover}
+.photo figcaption{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.photo figcaption a{color:var(--muted);font-size:11.5px}
+.photo-missing{display:none;margin:0;font-size:13px;color:var(--warn)}
+.photo.broken .photo-btn{display:none}
+.photo.broken .photo-missing{display:block}
+.inside{margin:0;font-size:14px;color:var(--muted);border-left:3px solid var(--chart);padding-left:10px}
+.lightbox{position:fixed;inset:0;z-index:2000;background:rgba(10,12,16,.92);display:grid;place-items:center;
+  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px}
+.lb-close{position:absolute;top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));width:44px;height:44px;padding:0;border-radius:50%;
+  background:#fff;color:#111;border:none;font-size:20px}
+.intro-inner.wide{max-width:640px}
+.pc-hunt{display:grid;gap:16px;margin-top:10px}
+.pc-hunt h2{font-family:var(--f-display);font-size:30px;margin:12px 0 0;text-transform:uppercase}
+.pc-stop{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.pc-stop h3{margin:0;font-family:var(--f-display);font-size:22px}
+.pc-stop .clue{font-size:14px}
+
 /* Game */
 .app{height:100%;display:grid;grid-template-rows:auto minmax(180px,1fr) auto}
 .bar{display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);

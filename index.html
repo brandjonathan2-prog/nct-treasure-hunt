@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NCS Treasure Hunt</title>
-<meta name="description" content="NCS Treasure Hunt: walking treasure hunts through the city. Follow the map, find the clues, answer the questions.">
+<meta name="description" content="NCS Treasure Hunt: church trails on foot. Follow the map, find the details in the photos, answer the questions.">
 <meta name="theme-color" content="#fbf9f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#151b22" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
@@ -24,7 +24,7 @@
   <div class="intro-inner">
     <p class="kicker">NCS Treasure Hunt</p>
     <h1>Choose a hunt</h1>
-    <p class="sub">Walking trails with clues to find and questions to answer.</p>
+    <p class="sub">Church trails on foot. Follow the map, find the details in the photos, and answer the questions.</p>
     <ul class="hunts" id="huntList"><li class="hunt-loading">Loading hunts…</li></ul>
     <div class="install" id="install" hidden></div>
   </div>
@@ -40,7 +40,7 @@
     <ol class="how">
       <li><span><b>Follow the map</b> to each stop. Your phone's location shows where you are.</span></li>
       <li><span><b>Arrive</b> within <span id="introRadius">35</span> metres and the question unlocks.</span></li>
-      <li><span><b>Answer</b> from what you can see. Hints cost points.</span></li>
+      <li><span><b>Look closely.</b> Use the photo to find the detail, then answer from what you can see. Hints cost points.</span></li>
     </ol>
     <p class="startat" id="introStart"></p>
     <button class="primary big" id="startBtn">Start the hunt</button>
@@ -48,6 +48,22 @@
     <p class="note" id="geoNote" hidden></p>
   </div>
 </main>
+
+<!-- Photo check: open with ?photos -->
+<main class="intro" id="photocheck" hidden>
+  <div class="intro-inner wide">
+    <p class="kicker">NCS Treasure Hunt</p>
+    <h1>Photo check</h1>
+    <p class="sub">Every stop's photo, clue and answers on one page. Check each photo shows what the clue says.</p>
+    <div id="pcList"><p class="hunt-loading">Loading…</p></div>
+  </div>
+</main>
+
+<!-- Enlarged photo -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Enlarged photo">
+  <img id="lbImg" alt="">
+  <button class="lb-close" id="lbClose" aria-label="Close photo">✕</button>
+</div>
 
 <!-- Game screen -->
 <div class="app" id="app" hidden>

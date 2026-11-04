@@ -1,6 +1,6 @@
 # NCS Treasure Hunt — web app
 
-Walking treasure hunts that run in the phone's web browser: Safari on iPhone/iPad, Chrome on Android. No app store needed. Players can add it to their home screen, where it opens full-screen like a normal app.
+Church treasure trails that run in the phone's web browser: Safari on iPhone/iPad, Chrome on Android. No app store needed. Players can add it to their home screen, where it opens full-screen like a normal app.
 
 ## Put it online (about 5 minutes)
 
@@ -43,7 +43,7 @@ To update later: open the site in the Netlify dashboard, go to Deploys, and drag
 | `index.html` | Start screen and game screen |
 | `app.js` | Game logic: GPS, distances, unlocking, answers, scoring, saving progress |
 | `styles.css` | Look and feel, light and dark mode |
-| `hunts/greenwich.json` | **The route.** Stops, clues, questions, answers, hints, facts |
+| `hunts/*.json` | **The routes.** One file per hunt: stops, clues, photos, questions, answers |
 | `manifest.webmanifest`, `icons/` | Makes it installable to the home screen |
 | `sw.js` | Offline support: caches the app and map tiles you've viewed |
 | `vendor/leaflet/` | Map library (Leaflet 1.9.4) with OpenStreetMap tiles |
@@ -54,17 +54,52 @@ To update later: open the site in the Netlify dashboard, go to Deploys, and drag
 
 ## The hunts
 
-The first hunt is the **Greenwich Meridian Hunt** (`hunts/greenwich.json`), 7 stops from Cutty Sark to the Royal Observatory. It loads by default.
+Church trails, any denomination:
+- **Greenwich Churches** (`hunts/greenwich-churches.json`): St Alfege, Our Ladye Star of the Sea, the Chapel at the Old Royal Naval College, Trinity Hospital.
+- **Westminster Churches** (`hunts/westminster-churches.json`): St Margaret's, Westminster Abbey, Methodist Central Hall, the Guards' Chapel, Westminster Cathedral, Smith Square Hall.
+
+`hunts/index.json` lists which hunts appear on the start screen, in order.
 
 ## Making a new hunt
 
-Copy `hunts/greenwich.json` to e.g. `hunts/soho.json`, edit it, and open the app with `?hunt=soho` on the end of the address.
+1. Copy one of the hunt files, e.g. to `hunts/city-churches.json`, and give it a new `id` matching the file name.
+2. Add the id to `hunts/index.json`.
+
+Each stop has:
+
+| Field | Meaning |
+|---|---|
+| `name`, `lat`, `lon` | The church and where to stand. Get coordinates by right-clicking in Google Maps. |
+| `clue` | How to find it and what to look for |
+| `photo` | Optional photo clue (see below) |
+| `inside` | `true` if the answer is inside the church; shows a note about opening hours and services |
+| `question`, `hint`, `fact` | Asked on arrival; hint costs 25 points; fact shown after answering |
+| `match` / `exact` | Accepted answers (see below) |
 
 Answers are matched loosely: case, spaces and punctuation are ignored.
-- `"match": ["tail"]` accepts any answer *containing* "tail" ("a horse's tail", "Tail").
-- `"exact": ["1pm", "1300"]` accepts only those answers (use it for numbers and times).
+- `"match": ["tail"]` accepts any answer *containing* "tail".
+- `"exact": ["1616"]` accepts only those answers (use it for numbers and dates).
 
-Tip: get coordinates by right-clicking a spot in Google Maps; the first item in the menu is the latitude, longitude.
+### Photo clues
+
+```json
+"photo": {
+  "src": "photos/st-alfege-keyboard.jpg",
+  "kind": "detail",
+  "caption": "Find this keyboard",
+  "credit": "Your Name",
+  "licence": "All rights reserved",
+  "link": "https://..."
+}
+```
+
+- `kind: "detail"` shows "Find this detail"; `kind: "view"` shows "Look out for this".
+- The current photos are Creative Commons (CC BY-SA 2.0) images from Geograph. The licence requires the photographer's credit, which the app shows under each photo. Keep it.
+- To use your own photos, put them in a `photos/` folder and point `src` at them, e.g. `photos/st-alfege-keyboard.jpg`. Close-ups of a specific carving, window or inscription make the best "find this detail" clues. Keep each under about 300 KB.
+
+### Photo check page
+
+Open the app with `?photos` on the end, e.g. `https://brandjonathan2-prog.github.io/ncs-treasure-hunt/?photos`. It shows every stop's photo, clue, question and accepted answers on one page, so you can check them.
 
 ## Before going public
 - Walk the route once to check each clue is visible and each answer is right.

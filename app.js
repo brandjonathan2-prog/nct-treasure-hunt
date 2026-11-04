@@ -38,12 +38,49 @@
   /* ---------- Boot ---------- */
   const getJSON = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
   setupInstall();
-  if (!HUNT_ID) initChooser();
+  if (params.has("photos")) initPhotoCheck();
+  else if (!HUNT_ID) initChooser();
   else getJSON(`hunts/${HUNT_ID}.json`)
     .then(h => { HUNT = h; initIntro(); })
     .catch(() => { $("intro").hidden = false; $("geoNote").hidden = false; $("introTitle").textContent = "Hunt not found";
       $("geoNote").textContent = "This hunt couldn't be loaded. Check your connection, or go back to the list of hunts."; });
   $("backBtn").onclick = () => goTo("");
+
+  /* ---------- Photo clues ---------- */
+  function photoCard(p) {
+    const label = p.kind === "detail" ? "Find this detail" : "Look out for this";
+    return `<figure class="photo" data-src="${esc(p.src)}">
+      <span class="photo-label">${label}</span>
+      <button type="button" class="photo-btn" aria-label="Enlarge photo"><img src="${esc(p.src)}" alt="${esc(p.caption || label)}" loading="lazy" onerror="this.closest('figure').classList.add('broken')"></button>
+      <figcaption><span>${esc(p.caption || "")}</span><a href="${esc(p.link)}" target="_blank" rel="noopener">Photo © ${esc(p.credit)}, ${esc(p.licence)}</a></figcaption>
+      <p class="photo-missing">The photo couldn't load. Check your connection.</p>
+    </figure>`;
+  }
+  function openLightbox(src, alt) {
+    const lb = $("lightbox"); $("lbImg").src = src; $("lbImg").alt = alt || ""; lb.hidden = false; $("lbClose").focus();
+  }
+  $("lbClose").onclick = () => { $("lightbox").hidden = true; };
+  $("lightbox").onclick = e => { if (e.target.id === "lightbox") $("lightbox").hidden = true; };
+  document.addEventListener("keydown", e => { if (e.key === "Escape") $("lightbox").hidden = true; });
+  document.addEventListener("click", e => {
+    const b = e.target.closest(".photo-btn"); if (!b) return;
+    const img = b.querySelector("img"); openLightbox(img.src, img.alt);
+  });
+
+  /* ---------- Photo check (open the app with ?photos) ---------- */
+  function initPhotoCheck() {
+    $("photocheck").hidden = false;
+    const out = $("pcList");
+    getJSON("hunts/index.json")
+      .then(ix => Promise.all(ix.hunts.map(id => getJSON(`hunts/${id}.json`).catch(() => null))))
+      .then(hunts => {
+        out.innerHTML = hunts.filter(Boolean).map(h => `<section class="pc-hunt"><h2>${esc(h.title)}</h2>${h.stops.map((s, k) => `
+          <article class="pc-stop"><p class="eyebrow"><span>Stop ${k + 1}</span></p><h3>${esc(s.name)}</h3>
+          ${s.photo ? photoCard(s.photo) : `<p class="locked">No photo yet.</p>`}
+          <p class="clue"><b>Clue:</b> ${esc(s.clue)}</p><p class="clue"><b>Question:</b> ${esc(s.question)}</p>
+          <p class="clue"><b>Accepted answers:</b> ${esc((s.exact || s.match).join(", "))}${s.exact ? " (exact)" : " (contains)"}</p></article>`).join("")}</section>`).join("");
+      });
+  }
 
   /* ---------- Hunt chooser ---------- */
   function initChooser() {
@@ -213,6 +250,8 @@
     const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}&travelmode=walking`;
     let h = `<div class="eyebrow"><span>Stop ${S.i + 1} of ${st.length}</span><span>${s.lat.toFixed(4)}°N ${Math.abs(s.lon).toFixed(4)}°W</span></div>
       <h2>${esc(s.name)}</h2><p class="clue">${esc(s.clue)}</p>`;
+    if (s.photo && !S.solved) h += photoCard(s.photo);
+    if (s.inside && !S.solved) h += `<p class="inside">This clue is inside the church. Check it's open, and if a service is on, please wait or come back later.</p>`;
     if (!S.unlocked) {
       h += `<div class="nav">${d == null ? `<span class="dir">Waiting for your location…</span>` :
         `<span class="arrow" style="transform:rotate(${Math.round(b)}deg)" aria-hidden="true">↑</span><span class="dist">${fmtDist(d)}</span><span class="dir">${compass(b)} · ${Math.round(b)}°</span>`}
