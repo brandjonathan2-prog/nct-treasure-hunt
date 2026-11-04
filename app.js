@@ -215,7 +215,8 @@
     // Once the question is showing, a new GPS fix only updates the GPS label. Rebuilding the panel
     // would wipe the answer box while someone is typing.
     if (wasUnlocked) $("modeTxt").textContent = acc ? `GPS ±${Math.round(acc)} m` : "GPS live";
-    else render();
+    else if (S.unlocked) render(); // just arrived: show the question
+    else updateLive();
   }
   function geoFail(e) {
     const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -344,6 +345,27 @@
   function restart() { begin(startIdx(), false); checkArrival(); drawRoute(); render(); refit(); }
 
   /* ---------- Bottom sheet ---------- */
+  // The parts that change as you walk: distance, arrow, direction and the "unlocks within" line
+  function navInner(s) {
+    const d = pos ? dist(pos, s) : null, b = pos ? bearing(pos, s) : 0;
+    const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}&travelmode=walking`;
+    return `${d == null ? `<span class="dir">Waiting for your location…</span>` :
+      `<span class="arrow" style="transform:rotate(${Math.round(b)}deg)" aria-hidden="true">↑</span><span class="dist">${fmtDist(d)}</span><span class="dir">${compass(b)} · ${Math.round(b)}°</span>`}
+      <a href="${gmaps}" target="_blank" rel="noopener">Directions ↗</a>`;
+  }
+  function lockText(s) {
+    const d = pos ? dist(pos, s) : null;
+    return d != null && d > 3000 && mode === "live" ? `You're ${fmtDist(d)} from this church. Use Directions to get there, or try test mode from here.`
+      : `The question unlocks when you're within ${HUNT.radius} m of this stop.`;
+  }
+  // Called on each GPS fix: update just those parts, so the photo and text don't redraw and flash
+  function updateLive() {
+    $("modeTxt").textContent = acc ? `GPS ±${Math.round(acc)} m` : "GPS live";
+    const nav = $("navLive"), lock = $("lockLine");
+    if (!nav || S.i >= N()) return render();
+    const s = HUNT.stops[curK()];
+    nav.innerHTML = navInner(s); if (lock) lock.textContent = lockText(s);
+  }
   function render() {
     if (!HUNT || $("app").hidden) return;
     const st = HUNT.stops, el = $("sheet");
@@ -362,8 +384,7 @@
       $("againB").onclick = restart; $("allB").onclick = () => goTo(""); return;
     }
     el.className = "sheet";
-    const k = curK(), s = st[k], d = pos ? dist(pos, s) : null, b = pos ? bearing(pos, s) : 0;
-    const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}&travelmode=walking`;
+    const k = curK(), s = st[k];
     let h = `<div class="eyebrow"><span>Church ${S.i + 1} of ${st.length}</span><span>${s.lat.toFixed(4)}°N ${Math.abs(s.lon).toFixed(4)}°W</span></div>
       <h2>${esc(s.name)}</h2>`;
     if (!S.unlocked && S.i > 0 && s.getThere) h += `<p class="getthere"><b>Getting here from ${esc(st[prevK(k)].name)}</b>${esc(s.getThere)}</p>`;
@@ -371,14 +392,11 @@
     if (s.photo && !S.solved) h += photoCard(s.photo);
     if (s.inside && !S.solved) h += `<p class="inside">This clue is inside the church. Check it's open, and if a service is on, please wait or come back later.</p>`;
     if (!S.unlocked) {
-      h += `<div class="nav">${d == null ? `<span class="dir">Waiting for your location…</span>` :
-        `<span class="arrow" style="transform:rotate(${Math.round(b)}deg)" aria-hidden="true">↑</span><span class="dist">${fmtDist(d)}</span><span class="dir">${compass(b)} · ${Math.round(b)}°</span>`}
-        <a href="${gmaps}" target="_blank" rel="noopener">Directions ↗</a></div>`;
+      h += `<div class="nav" id="navLive">${navInner(s)}</div>`;
       const leg = legs && legs[k];
       if (S.i > 0 && leg && leg.m) h += `<p class="legline">Follow the red route: ${fmtDist(leg.m)} on foot, about ${Math.max(1, Math.round(leg.s / 60))} min.</p>`;
       if (S.i === 0) h += `<p class="legline">Make your way to ${esc(s.name)} to begin. ${esc(HUNT.transport || "")}</p>`;
-      if (d != null && d > 3000 && mode === "live") h += `<p class="locked">You're ${fmtDist(d)} from this church. Use Directions to get there, or try test mode from here.</p>`;
-      else h += `<p class="locked">The question unlocks when you're within ${HUNT.radius} m of this stop.</p>`;
+      h += `<p class="locked" id="lockLine">${lockText(s)}</p>`;
       if (msg && msg.c === "bad") h += `<p class="msg bad">${esc(msg.t)}</p>`;
     } else if (!S.solved) {
       h += `<form class="q" id="qf"><p>${esc(s.question)}</p>
