@@ -328,6 +328,19 @@
     if (ok) { const p = points(); S.score += p; S.solved = true; S.results.push({ name: s.name, pts: p }); msg = { t: `Correct. +${p} points.`, c: "good" }; }
     else { S.tries++; msg = { t: S.tries >= 3 ? "Not quite. Take a hint or skip this one." : "Not quite. Try again.", c: "bad" }; }
     save(); render();
+    if (ok) $("sheet").scrollTop = 0;
+    showResult();
+  }
+  // Bring the "Correct" / "Not quite" line into view. Wait for the on-screen keyboard to close first:
+  // on iPhone it leaves the page scrolled, which would otherwise hide the message.
+  function showResult() {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      const sheet = $("sheet"), m = sheet.querySelector(".msg");
+      if (!m) return;
+      const top = m.offsetTop - sheet.offsetTop - 12;
+      if (top < sheet.scrollTop || top + m.offsetHeight > sheet.scrollTop + sheet.clientHeight) sheet.scrollTop = Math.max(0, top);
+    }, 350);
   }
   function next() { S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); render(); $("sheet").scrollTop = 0; refit(); }
   // Frame the map after the sheet below it has settled to its new height
@@ -359,7 +372,7 @@
     let h = `<div class="eyebrow"><span>Church ${S.i + 1} of ${st.length}</span><span>${s.lat.toFixed(4)}°N ${Math.abs(s.lon).toFixed(4)}°W</span></div>
       <h2>${esc(s.name)}</h2>`;
     if (!S.unlocked && S.i > 0 && s.getThere) h += `<p class="getthere"><b>Getting here from ${esc(st[prevK(k)].name)}</b>${esc(s.getThere)}</p>`;
-    h += `<p class="clue">${esc(s.find)}</p>`;
+    if (!S.solved) h += `<p class="clue">${esc(s.find)}</p>`; // once answered, the result comes straight after the name
     if (s.photo && !S.solved) h += photoCard(s.photo);
     if (s.inside && !S.solved) h += `<p class="inside">This clue is inside the church. Check it's open, and if a service is on, please wait or come back later.</p>`;
     if (!S.unlocked) {

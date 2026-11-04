@@ -1,6 +1,6 @@
 /* Service worker: keeps the app working with a weak signal in the park.
    App files are cached on install; map tiles you've viewed are cached as you go. */
-const VERSION = "v10";
+const VERSION = "v11";
 const APP = `nct-app-${VERSION}`, TILES = "nct-tiles", PHOTOS = "nct-photos";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
