@@ -3,7 +3,7 @@
   src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
 :root{
   --surface:#fbf9f3; --ink:#1d2a36; --muted:#5d6b77; --line:#d4cdb8;
-  --chart:#b51f24; --chart-ink:#fff; --ok:#2f7d4f; --warn:#a4580c; --route:#1d2a36;
+  --chart:#b51f24; --chart-ink:#fff; --gold:#e3a82b; --ok:#2f7d4f; --warn:#a4580c; --route:#1d2a36;
   --f-display:"Barlow Condensed","Arial Narrow","Helvetica Neue",system-ui,sans-serif;
   --f-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
   --f-mono:ui-monospace,"SF Mono",Menlo,"Roboto Mono",Consolas,monospace;
@@ -12,7 +12,7 @@
 }
 @media (prefers-color-scheme: dark){:root{
   --surface:#151b22; --ink:#e7ecef; --muted:#9aa8b3; --line:#34404c;
-  --chart:#ff7b70; --chart-ink:#240a09; --ok:#6fcf97; --warn:#f0a85c; --route:#e7ecef;
+  --chart:#ff7b70; --chart-ink:#240a09; --gold:#f4c35a; --ok:#6fcf97; --warn:#f0a85c; --route:#e7ecef;
   --tile-filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9);
   color-scheme:dark}}
 
@@ -70,6 +70,26 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .here b{font-family:var(--f-display);font-size:24px;line-height:1.1;text-transform:uppercase}
 .getthere{margin:0;font-size:15px}
 .getthere b{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;font-weight:400}
+
+/* Correct answer */
+.win{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--chart);color:var(--chart-ink);border-radius:8px;padding:12px 16px}
+.win-word{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.win-pts{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1;background:var(--gold);color:#2a1c00;border-radius:999px;padding:6px 12px;font-variant-numeric:tabular-nums}
+.sparks{position:absolute;right:38px;top:50%;width:0;height:0;pointer-events:none}
+.sparks i{position:absolute;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:var(--gold);opacity:0}
+.sparks i:nth-child(3n){background:var(--chart-ink)}
+#score.bump{display:inline-block}
+@media (prefers-reduced-motion: no-preference){
+  .win.pop{animation:win-in .45s cubic-bezier(.2,1.4,.4,1) both}
+  .win.pop .win-pts{animation:pts-in .5s .2s cubic-bezier(.2,1.6,.4,1) both}
+  .win.pop .sparks i{animation:spark .7s .25s ease-out both}
+  #score.bump{animation:bump .5s ease-out}
+  @keyframes win-in{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+  @keyframes pts-in{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
+  @keyframes spark{0%{opacity:1;transform:rotate(var(--a)) translateX(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateX(var(--d)) scale(.4)}}
+  @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.35);color:var(--chart)}100%{transform:scale(1)}}
+}
 
 /* Photo clues */
 .photo{margin:0;display:grid;gap:6px}

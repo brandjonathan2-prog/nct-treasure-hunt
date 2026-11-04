@@ -331,10 +331,21 @@
     }
   }
   const points = () => Math.max(25, 100 - (S.hint ? 25 : 0) - S.tries * 10);
+  // A different cheer each time, a little more muted if hints or retries were needed
+  function cheer(p) {
+    const full = ["Well spotted!", "Spot on!", "Brilliant!", "Eagle-eyed!", "Superb!", "Nailed it!"];
+    const some = ["Got it!", "Nicely done!", "There you go!", "Good work!"];
+    const list = p === 100 ? full : some;
+    return list[(S.i + S.score) % list.length];
+  }
   function answer(v) {
     const s = HUNT.stops[curK()], n = norm(v); if (!n) return;
     const ok = s.exact ? s.exact.includes(n) : s.match.some(m => n.includes(m));
-    if (ok) { const p = points(); S.score += p; S.solved = true; S.results.push({ name: s.name, pts: p }); msg = { t: `Correct. +${p} points.`, c: "good" }; }
+    if (ok) {
+      const p = points(); S.score += p; S.solved = true; S.results.push({ name: s.name, pts: p });
+      msg = { t: cheer(p), pts: p, c: "good", win: true, fresh: true };
+      if (navigator.vibrate) navigator.vibrate([40, 50, 40, 50, 120]);
+    }
     else { S.tries++; msg = { t: S.tries >= 3 ? "Not quite. Take a hint or skip this one." : "Not quite. Try again.", c: "bad" }; }
     save(); render();
   }
@@ -345,6 +356,12 @@
   function restart() { begin(startIdx(), false); checkArrival(); drawRoute(); render(); refit(); }
 
   /* ---------- Bottom sheet ---------- */
+  function winBanner(m) {
+    const pop = m.fresh ? " pop" : ""; m.fresh = false; // animate once, not on every redraw
+    const sparks = m.fresh === false && pop ? Array.from({ length: 10 }, (_, k) => `<i style="--a:${k * 36}deg;--d:${k % 2 ? 46 : 64}px"></i>`).join("") : "";
+    return `<div class="win${pop}" role="status"><span class="sparks" aria-hidden="true">${sparks}</span>
+      <span class="win-word">${esc(m.t)}</span><span class="win-pts">+${m.pts}</span></div>`;
+  }
   // The parts that change as you walk: distance, arrow, direction and the "unlocks within" line
   function navInner(s) {
     const d = pos ? dist(pos, s) : null, b = pos ? bearing(pos, s) : 0;
@@ -369,7 +386,8 @@
   function render() {
     if (!HUNT || $("app").hidden) return;
     const st = HUNT.stops, el = $("sheet");
-    $("score").textContent = S.score;
+    const sc = $("score");
+    if (sc.textContent !== String(S.score)) { sc.textContent = S.score; sc.classList.remove("bump"); void sc.offsetWidth; sc.classList.add("bump"); }
     $("prog").textContent = `${Math.min(S.i + 1, st.length)}/${st.length}`;
     $("modeDot").classList.toggle("live", mode === "live");
     $("modeTxt").textContent = mode === "live" ? (acc ? `GPS ±${Math.round(acc)} m` : "GPS live") : "Test mode · tap map";
@@ -405,7 +423,7 @@
         ${S.hint ? `<p class="hint">Hint: ${esc(s.hint)}</p>` : ""}
         <div class="row">${S.hint ? "" : `<button type="button" class="link" id="hintB">Show hint (−25)</button>`}${S.tries >= 2 ? `<button type="button" class="link" id="skipB">Skip this stop</button>` : ""}</div></form>`;
     } else {
-      h += `${msg ? `<p class="msg ${msg.c}">${esc(msg.t)}</p>` : ""}<p class="fact">${esc(s.fact)}</p>
+      h += `${msg && msg.win ? winBanner(msg) : msg ? `<p class="msg ${msg.c}">${esc(msg.t)}</p>` : ""}<p class="fact">${esc(s.fact)}</p>
         <div class="row"><button class="primary" id="nextB">${S.i === st.length - 1 ? "Finish" : `Next: ${esc(st[stopAt(S.i + 1)].name)} →`}</button></div>`;
     }
     h += `<div class="tools">${mode === "test" ? `<button id="jumpB">Jump to this stop</button>` : `<button class="link" id="testB2">Switch to test mode</button>`}${canFullscreen() && !document.fullscreenElement ? `<button class="link" id="fullB">Full screen</button>` : ""}<button class="link" id="restartB">Restart</button><button class="link" id="allB">All hunts</button></div>`;
