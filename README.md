@@ -105,7 +105,7 @@ For a new hunt, leave `legs` out: the app asks the router for the routes the fir
 
 ### Photo check page
 
-Open the app with `?photos` on the end, e.g. `https://brandjonathan2-prog.github.io/ncs-treasure-hunt/?photos`. It shows every stop's photo, clue, question and accepted answers on one page, so you can check them.
+Open the app with `?photos` on the end, e.g. `https://brandjonathan2-prog.github.io/nct-treasure-hunt/?photos`. It shows every stop's photo, clue, question and accepted answers on one page, so you can check them.
 
 ## Before going public
 - Walk the route once to check each clue is visible and each answer is right.
