@@ -35,6 +35,7 @@
   try { const s = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(KEY.replace("nct-", "ncs-")) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
+  let installPrompt = null; // Chrome's "install this app" prompt, saved for when the player taps Install
   let HUNT, map, layers = {}, pos = null, acc = null, mode = "none", watchId = null, msg = null, followed = false;
 
   /* ---------- The loop ---------- */
@@ -338,6 +339,7 @@
       el.innerHTML = `<div class="eyebrow"><span>Hunt complete</span><span>${S.score} / ${st.length * 100}</span></div>
         <h2>${esc(HUNT.finish || "Hunt complete")}</h2>
         <ul class="log">${S.results.map((r, k) => `<li><span>${k + 1}. ${esc(r.name)}</span><span>${r.pts}</span></li>`).join("")}</ul>
+        ${installHint("Try another trail next time.")}
         <div class="tools"><button id="againB">Play again from ${esc(st[startIdx()].name)}</button><button class="primary" id="allB">Choose another hunt</button></div>`;
       $("againB").onclick = restart; $("allB").onclick = () => goTo(""); return;
     }
@@ -382,22 +384,31 @@
   }
 
   /* ---------- Add to Home Screen ---------- */
+  // Install hints: on the hunt list, and on the finish screen of every hunt
+  function isStandalone() { return matchMedia("(display-mode: standalone)").matches || navigator.standalone; }
+  function isIOS() { return /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
+  function installHint(lead) {
+    if (isStandalone()) return "";
+    if (installPrompt) return `<div class="install"><span><b>${lead}</b> Install NCT Treasure Hunt to open it full-screen from your home screen.</span><button type="button" class="install-btn">Install</button></div>`;
+    if (isIOS()) return `<div class="install"><span><b>${lead}</b> Add NCT Treasure Hunt to your Home Screen: tap Safari's Share button (the square with an arrow pointing up), then “Add to Home Screen”.</span></div>`;
+    return `<div class="install"><span><b>${lead}</b> Add NCT Treasure Hunt to your home screen from your browser's menu (⋮ › Add to Home screen).</span></div>`;
+  }
+  document.addEventListener("click", async e => {
+    if (!e.target.closest(".install-btn") || !installPrompt) return;
+    installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null;
+    document.querySelectorAll(".install").forEach(x => { x.hidden = true; });
+  });
   function setupInstall() {
+    if (isStandalone()) return;
     const box = $("install");
-    const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
-    if (standalone) return;
-    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    if (ios) {
-      box.hidden = false;
-      box.innerHTML = `<span><b>Add to your Home Screen</b> for a full-screen app: tap Safari's Share button (the square with an arrow pointing up), then “Add to Home Screen”.</span>`;
-    }
+    if (isIOS()) { box.hidden = false; box.outerHTML = installHint("For a full-screen app,").replace('<div class="install">', '<div class="install" id="install">'); }
     window.addEventListener("beforeinstallprompt", e => {
-      e.preventDefault();
-      box.hidden = false;
-      box.innerHTML = `<span><b>Install the app</b> to play full-screen and start it from your home screen.</span><button id="instB">Install</button>`;
-      $("instB").onclick = async () => { e.prompt(); await e.userChoice; box.hidden = true; };
+      e.preventDefault(); installPrompt = e;
+      const b = $("install"); if (b) { b.outerHTML = installHint("For a full-screen app,").replace('<div class="install">', '<div class="install" id="install">'); }
+      if (S.i >= (HUNT ? N() : Infinity)) render();
     });
   }
+
 
   if ("serviceWorker" in navigator && window.isSecureContext) {
     window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
