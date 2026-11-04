@@ -21,7 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 HUNTS = os.path.join(HERE, "..", "hunts")
 pdfmetrics.registerFont(TTFont("Display", FONT))
 
-INK, MUTED, CHART, PAPER, LINE = HexColor("#1d2a36"), HexColor("#5d6b77"), HexColor("#b0137a"), HexColor("#fbf9f3"), HexColor("#d4cdb8")
+INK, MUTED, CHART, PAPER, LINE = HexColor("#1d2a36"), HexColor("#5d6b77"), HexColor("#b51f24"), HexColor("#fbf9f3"), HexColor("#d4cdb8")
 W, H = A4
 M = 18 * mm
 
@@ -58,7 +58,12 @@ def poster(c, hunt, k):
     c.setFillColor(CHART); c.rect(0, H - 30 * mm, W, 30 * mm, stroke=0, fill=1)
     c.setFillColor(white); c.setFont("Display", 30); c.drawString(M, H - 19 * mm, "NCT TREASURE HUNT")
     c.setFont("Helvetica", 11); c.drawString(M, H - 25.5 * mm, "A church trail on foot · free · on your phone")
-    c.setFont("Display", 16); c.drawRightString(W - M, H - 19 * mm, hunt["title"].upper())
+    logo = os.path.join(HERE, "..", "brand", "logo.png")
+    if os.path.exists(logo):  # the Trust's logo, once they've provided it
+        c.setFillColor(white); c.roundRect(W - M - 52 * mm, H - 27 * mm, 52 * mm, 24 * mm, 2 * mm, stroke=0, fill=1)
+        c.drawImage(logo, W - M - 50 * mm, H - 25 * mm, 48 * mm, 20 * mm, preserveAspectRatio=True, mask="auto")
+    else:
+        c.setFont("Display", 16); c.drawRightString(W - M, H - 19 * mm, hunt["title"].upper())
 
     # Where you are
     y = H - 46 * mm

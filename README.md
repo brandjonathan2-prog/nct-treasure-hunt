@@ -90,6 +90,10 @@ Every hunt is a loop. Players can start at any church and carry on round until t
 - **From a QR code:** `…/?hunt=westminster-churches&start=st-margarets` opens the hunt at that church, and the first question unlocks straight away.
 - Progress is saved on the phone, so players can stop and continue later.
 
+### Logo
+
+The app has a space for the National Churches Trust logo, but doesn't include it. Once the Trust has provided its logo and agreed to its use, save it as `brand/logo.png` (a PNG with a transparent or white background, about 400 px wide). It then appears automatically on the start screens, and on the posters the next time they're regenerated. The colour scheme is red; the main colour is `--chart` in `styles.css`.
+
 ### QR posters
 
 `posters/` has a printable A4 poster for every church: QR code, trail name, distance and the route from that church. To regenerate them after changing a hunt:

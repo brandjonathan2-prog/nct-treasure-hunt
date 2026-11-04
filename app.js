@@ -355,7 +355,7 @@
         `<span class="arrow" style="transform:rotate(${Math.round(b)}deg)" aria-hidden="true">↑</span><span class="dist">${fmtDist(d)}</span><span class="dir">${compass(b)} · ${Math.round(b)}°</span>`}
         <a href="${gmaps}" target="_blank" rel="noopener">Directions ↗</a></div>`;
       const leg = legs && legs[k];
-      if (S.i > 0 && leg && leg.m) h += `<p class="legline">Follow the magenta route: ${fmtDist(leg.m)} on foot, about ${Math.max(1, Math.round(leg.s / 60))} min.</p>`;
+      if (S.i > 0 && leg && leg.m) h += `<p class="legline">Follow the red route: ${fmtDist(leg.m)} on foot, about ${Math.max(1, Math.round(leg.s / 60))} min.</p>`;
       if (S.i === 0) h += `<p class="legline">Make your way to ${esc(s.name)} to begin. ${esc(HUNT.transport || "")}</p>`;
       if (d != null && d > 3000 && mode === "live") h += `<p class="locked">You're ${fmtDist(d)} from this church. Use Directions to get there, or try test mode from here.</p>`;
       else h += `<p class="locked">The question unlocks when you're within ${HUNT.radius} m of this stop.</p>`;
