@@ -1,4 +1,4 @@
-/* NCS Treasure Hunt — game logic
+/* NCT Treasure Hunt — game logic
    Works in Safari (iPhone/iPad) and Chrome (Android). Needs HTTPS for GPS. */
 (() => {
   "use strict";
@@ -6,7 +6,7 @@
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
   const HUNT_ID = (params.get("hunt") || "").replace(/[^a-z0-9-]/gi, "");
-  const keyFor = id => `ncs-hunt-${id}-v1`;
+  const keyFor = id => `nct-hunt-${id}-v1`;
   const goTo = id => { location.href = id ? `?hunt=${encodeURIComponent(id)}` : location.pathname; };
 
   /* ---------- Geo helpers ---------- */
@@ -30,7 +30,7 @@
   const KEY = keyFor(HUNT_ID);
   const fresh = () => ({ i: 0, score: 0, unlocked: false, tries: 0, hint: false, solved: false, results: [], started: false });
   let S = fresh();
-  try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
+  try { const s = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(KEY.replace("nct-", "ncs-")) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
   let HUNT, map, layers = {}, pos = null, acc = null, mode = "none", watchId = null, msg = null, followed = false;
@@ -105,7 +105,7 @@
   }
 
   function initIntro() {
-    document.title = `${HUNT.title} · NCS Treasure Hunt`;
+    document.title = `${HUNT.title} · NCT Treasure Hunt`;
     $("introTitle").textContent = HUNT.title; $("barTitle").textContent = HUNT.title;
     $("introSub").textContent = HUNT.subtitle;
     $("introRadius").textContent = HUNT.radius;

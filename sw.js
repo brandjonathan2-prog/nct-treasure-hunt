@@ -1,7 +1,7 @@
 /* Service worker: keeps the app working with a weak signal in the park.
    App files are cached on install; map tiles you've viewed are cached as you go. */
-const VERSION = "v3";
-const APP = `ncs-app-${VERSION}`, TILES = "ncs-tiles", PHOTOS = "ncs-photos";
+const VERSION = "v4";
+const APP = `nct-app-${VERSION}`, TILES = "nct-tiles", PHOTOS = "nct-photos";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "hunts/index.json", "hunts/greenwich-churches.json", "hunts/westminster-churches.json", "fonts/barlow-condensed-latin-700-normal.woff2",
@@ -15,7 +15,7 @@ self.addEventListener("install", e => {
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(
-    keys.filter(k => k.startsWith("ncs-app-") && k !== APP).map(k => caches.delete(k))
+    keys.filter(k => (k.startsWith("nct-app-") || k.startsWith("ncs-")) && k !== APP).map(k => caches.delete(k))
   )).then(() => self.clients.claim()));
 });
 

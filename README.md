@@ -1,4 +1,4 @@
-# NCS Treasure Hunt — web app
+# NCT Treasure Hunt — web app
 
 Church treasure trails that run in the phone's web browser: Safari on iPhone/iPad, Chrome on Android. No app store needed. Players can add it to their home screen, where it opens full-screen like a normal app.
 
@@ -7,19 +7,19 @@ Church treasure trails that run in the phone's web browser: Safari on iPhone/iPa
 The app must be served over **https://**. Phones only share their location with secure sites.
 
 ### Option 1: Netlify Drop (easiest)
-1. Unzip `ncs-treasure-hunt.zip` so you have the `ncs-treasure-hunt` folder.
+1. Unzip `nct-treasure-hunt.zip` so you have the `nct-treasure-hunt` folder.
 2. Go to https://app.netlify.com/drop on your laptop.
-3. Drag the `ncs-treasure-hunt` folder onto the page.
+3. Drag the `nct-treasure-hunt` folder onto the page.
 4. Sign up or log in (free) to claim the site. Until you claim it, Netlify puts a temporary password on it.
-5. You get an address like `https://something.netlify.app`. In Site settings you can rename it, e.g. `ncs-treasure-hunt.netlify.app`.
+5. You get an address like `https://something.netlify.app`. In Site settings you can rename it, e.g. `nct-treasure-hunt.netlify.app`.
 
 To update later: open the site in the Netlify dashboard, go to Deploys, and drag the updated folder onto the drop area.
 
 ### Option 2: GitHub Pages
-1. Create a new public repository on github.com, e.g. `ncs-treasure-hunt`.
-2. Upload the contents of the `ncs-treasure-hunt` folder (not the folder itself) with "Add file › Upload files".
+1. Create a new public repository on github.com, e.g. `nct-treasure-hunt`.
+2. Upload the contents of the `nct-treasure-hunt` folder (not the folder itself) with "Add file › Upload files".
 3. Settings › Pages › Source: "Deploy from a branch", branch `main`, folder `/ (root)`.
-4. After a minute the app is at `https://<your-username>.github.io/ncs-treasure-hunt/`.
+4. After a minute the app is at `https://<your-username>.github.io/nct-treasure-hunt/`.
 
 ## Playing on a phone
 
