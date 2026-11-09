@@ -13,8 +13,9 @@
       "name": "St Margaret's Church",
       "lat": 51.49985,
       "lon": -0.1268,
+      "inside": true,
       "getThere": "Walk up Lord North Street and along Great Peter Street to Millbank, then north along Abingdon Street past the Houses of Parliament.",
-      "find": "St Margaret's is the small church beside Westminster Abbey, facing Parliament Square. Go to its north side near the east end and look above the door for a carved head.",
+      "find": "St Margaret's is the small church beside Westminster Abbey, facing Parliament Square. Go inside (it's free, Monday to Friday, 10.30am to 3.30pm) and look at the great stained-glass window behind the altar.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/03/92/76/3927672_08adccdb.jpg",
         "kind": "view",
@@ -23,12 +24,14 @@
         "licence": "CC BY-SA 2.0",
         "link": "https://www.geograph.org.uk/photo/3927672"
       },
-      "question": "The bust stares across the road at Oliver Cromwell's statue. It shows the king whose death warrant Cromwell signed. Which king?",
+      "question": "The window shows the Crucifixion, with a royal couple kneeling in prayer below. The young woman later became Henry VIII's first wife. Who was she?",
       "match": [
-        "charles"
+        "catherine",
+        "katherine",
+        "aragon"
       ],
-      "hint": "He was beheaded on Whitehall in 1649.",
-      "fact": "St Margaret's has been the parish church of the Palace of Westminster since 1614. Winston Churchill married Clementine Hozier here in 1908, and Sir Walter Raleigh was buried here in 1618."
+      "hint": "A Spanish princess, the first of Henry VIII's six wives.",
+      "fact": "Flemish glaziers made the window in the early 1500s to celebrate Catherine's betrothal. It passed through several owners before the parish bought it in 1758 for 400 guineas. St Margaret's has been the parish church of the House of Commons since 1614, and Winston Churchill married Clementine Hozier here in 1908."
     },
     {
       "id": "westminster-abbey",
