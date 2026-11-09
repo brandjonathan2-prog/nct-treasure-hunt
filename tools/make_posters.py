@@ -5,7 +5,7 @@ Usage: python3 tools/make_posters.py BASE_URL FONT_TTF OUT_DIR
   FONT_TTF  a TTF of Barlow Condensed Bold (headings)
 Each QR code opens BASE_URL?hunt=<hunt id>&start=<church id>.
 """
-import json, sys, os
+import json, sys, os, re
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -102,7 +102,7 @@ def poster(c, hunt, k):
     # Facts strip
     y -= 11 * mm
     c.setStrokeColor(LINE); c.setLineWidth(0.8); c.line(M, y + 6 * mm, W - M, y + 6 * mm)
-    facts = [f"{n} churches", f"{fmt(walk)} walk from here" if walk else "", "about 90 minutes" if n > 4 else "about 75 minutes", "free"]
+    facts = [f"{n} churches", f"{fmt(walk)} walk from here" if walk else "", (re.search(r"about \d+ minutes", hunt["subtitle"]) or re.search(r"$", "")).group(0), "free"]
     c.setFillColor(INK); c.setFont("Display", 17)
     c.drawString(M, y - 1 * mm, "   ·   ".join(f for f in facts if f).upper())
 

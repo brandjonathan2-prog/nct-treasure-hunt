@@ -56,7 +56,7 @@ To update later: open the site in the Netlify dashboard, go to Deploys, and drag
 
 Church trails, any denomination:
 - **Greenwich Churches** (`hunts/greenwich-churches.json`): St Alfege, Our Ladye Star of the Sea, the Chapel at the Old Royal Naval College, Trinity Hospital.
-- **Westminster Churches** (`hunts/westminster-churches.json`): St Margaret's, Westminster Abbey, Methodist Central Hall, the Guards' Chapel, Westminster Cathedral, Smith Square Hall.
+- **Westminster Churches** (`hunts/westminster-churches.json`): St Margaret's, Westminster Abbey, Methodist Central Hall, the Guards' Chapel, Westminster Cathedral, St Matthew's, Smith Square Hall.
 
 `hunts/index.json` lists which hunts appear on the start screen, in order.
 
