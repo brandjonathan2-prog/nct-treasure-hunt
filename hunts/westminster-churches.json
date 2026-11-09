@@ -135,8 +135,9 @@
       "name": "St Matthew's Church",
       "lat": 51.49705,
       "lon": -0.13075,
+      "inside": true,
       "getThere": "Walk east along Victoria Street and turn right into Old Pye Street. St Matthew's is the grey stone church between Old Pye Street and Great Peter Street, with its parish school beside it.",
-      "find": "Find the entrance on Great Peter Street, under the church's short, sturdy tower.",
+      "find": "Go in through the base of the church's short, sturdy tower on Great Peter Street (the doors are open every day). Near the high altar, the church keeps a relic of its patron saint, St Matthew.",
       "photo": {
         "src": "https://s0.geograph.org.uk/geophotos/01/06/44/1064428_47bfde51.jpg",
         "kind": "view",
@@ -145,18 +146,16 @@
         "licence": "CC BY-SA 2.0",
         "link": "https://www.geograph.org.uk/photo/1064428"
       },
-      "question": "The tower was meant to carry a tall spire, but only its base was ever built. What is the base of the tower used as today?",
+      "question": "Before Jesus called him to be a disciple, St Matthew had a job that made him very unpopular. What was it?",
       "match": [
-        "entrance",
-        "porch",
-        "door",
-        "entry",
-        "wayin",
-        "foyer",
-        "lobby"
+        "tax",
+        "publican",
+        "revenue",
+        "customs",
+        "collector"
       ],
-      "hint": "You'd walk through it to get inside.",
-      "fact": "George Gilbert Scott designed St Matthew's in 1849–51. Fire almost destroyed it in 1977. The smaller church rebuilt inside it was dedicated in 1984 and kept rescued treasures, including the Lady Chapel by Ninian Comper. Its doors are open every day."
+      "hint": "He collected money from his own people on behalf of the Romans.",
+      "fact": "Matthew was a tax collector in Capernaum, and the first Gospel in the Bible carries his name. George Gilbert Scott designed this church in 1849–51. Its tower was meant to carry a tall spire that was never built, so its base became the entrance. Fire almost destroyed the church in 1977, and it was rebuilt smaller and dedicated in 1984, keeping Ninian Comper's Lady Chapel."
     },
     {
       "id": "smith-square-hall",
