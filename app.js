@@ -35,6 +35,7 @@
   try { const s = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(KEY.replace("nct-", "ncs-")) || "null"); if (s && typeof s.i === "number") S = { ...S, ...s }; } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
+  let celebrate = false; // set when the last church is answered, so the finish screen celebrates once
   let installPrompt = null; // Chrome's "install this app" prompt, saved for when the player taps Install
   let HUNT, map, layers = {}, pos = null, acc = null, mode = "none", watchId = null, msg = null, followed = false;
 
@@ -350,13 +351,33 @@
     else { S.tries++; msg = { t: S.tries >= 3 ? "Not quite. Take a hint or skip this one." : "Not quite. Try again.", c: "bad" }; }
     save(); render();
   }
-  function next() { S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); render(); $("sheet").scrollTop = 0; refit(); }
+  function next() { if (S.i === N() - 1) celebrate = true; S.i++; S.unlocked = false; S.tries = 0; S.hint = false; S.solved = false; msg = null; checkArrival(); save(); drawRoute(); render(); $("sheet").scrollTop = 0; refit(); }
   // Frame the map after the sheet below it has settled to its new height
   function refit() { requestAnimationFrame(() => { map.invalidateSize(); frame(); }); }
   function skip() { S.results.push({ name: HUNT.stops[curK()].name, pts: 0 }); S.solved = true; msg = { t: "Skipped. No points for this stop.", c: "bad" }; save(); render(); }
   function restart() { begin(startIdx(), false); checkArrival(); drawRoute(); render(); refit(); }
 
   /* ---------- Bottom sheet ---------- */
+  // A short burst of confetti across the screen (skipped if the phone asks for reduced motion)
+  function confetti() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const c = document.createElement("canvas"); c.className = "confetti"; document.body.appendChild(c);
+    const dpr = Math.min(2, devicePixelRatio || 1), W = innerWidth, H = innerHeight;
+    c.width = W * dpr; c.height = H * dpr; const x = c.getContext("2d"); x.scale(dpr, dpr);
+    const cs = getComputedStyle(document.documentElement);
+    const cols = [cs.getPropertyValue("--chart"), cs.getPropertyValue("--gold"), "#ffffff", cs.getPropertyValue("--route")].map(v => v.trim());
+    const bits = Array.from({ length: 140 }, () => ({
+      x: W / 2 + (Math.random() - .5) * 60, y: H * .55, vx: (Math.random() - .5) * 11, vy: -Math.random() * 15 - 6,
+      w: 6 + Math.random() * 6, h: 4 + Math.random() * 4, r: Math.random() * 6, vr: (Math.random() - .5) * .35, c: cols[Math.floor(Math.random() * cols.length)]
+    }));
+    const t0 = performance.now();
+    (function frame(t) {
+      const age = t - t0; x.clearRect(0, 0, W, H);
+      bits.forEach(b => { b.vy += .32; b.vx *= .99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
+        x.save(); x.globalAlpha = Math.max(0, 1 - age / 3200); x.translate(b.x, b.y); x.rotate(b.r); x.fillStyle = b.c; x.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); x.restore(); });
+      if (age < 3200) requestAnimationFrame(frame); else c.remove();
+    })(t0);
+  }
   function winBanner(m) {
     const pop = m.fresh ? " pop" : ""; m.fresh = false; // animate once, not on every redraw
     const sparks = m.fresh === false && pop ? Array.from({ length: 10 }, (_, k) => `<i style="--a:${k * 36}deg;--d:${k % 2 ? 46 : 64}px"></i>`).join("") : "";
@@ -380,7 +401,8 @@
   function updateLive() {
     $("modeTxt").textContent = acc ? `GPS ±${Math.round(acc)} m` : "GPS live";
     const nav = $("navLive"), lock = $("lockLine");
-    if (!nav || S.i >= N()) return render();
+    if (S.i >= N()) return; // finish screen: nothing moves, so don't redraw it (and replay the celebration)
+    if (!nav) return render();
     const s = HUNT.stops[curK()];
     nav.innerHTML = navInner(s); if (lock) lock.textContent = lockText(s);
   }
@@ -394,13 +416,28 @@
     $("modeTxt").textContent = mode === "live" ? (acc ? `GPS ±${Math.round(acc)} m` : "GPS live") : "Test mode · tap map";
 
     if (S.i >= st.length) {
+      const max = st.length * 100, pct = S.score / max;
+      const rank = pct >= 1 ? ["Master Pilgrim", "A perfect score: every church, no hints."]
+        : pct >= .8 ? ["Eagle-eyed Pilgrim", "Barely a detail escaped you."]
+        : pct >= .5 ? ["Keen Pilgrim", "A fine day's exploring."]
+        : ["Pilgrim", "Every church visited. That's what counts."];
+      const stars = pct >= 1 ? 3 : pct >= .8 ? 2 : 1;
+      const pop = celebrate ? " pop" : "";
       el.className = "sheet done";
-      el.innerHTML = `<div class="eyebrow"><span>Hunt complete</span><span>${S.score} / ${st.length * 100}</span></div>
-        <h2>${esc(HUNT.finish || "Hunt complete")}</h2>
-        <ul class="log">${S.results.map((r, k) => `<li><span>${k + 1}. ${esc(r.name)}</span><span>${r.pts}</span></li>`).join("")}</ul>
+      el.innerHTML = `<div class="finale${pop}">
+          <div class="medal" aria-hidden="true"><span class="medal-n">${st.length}/${st.length}</span><span class="medal-l">churches</span></div>
+          <p class="finale-kicker">Trail complete!</p>
+          <h2>${esc(HUNT.finish || "Hunt complete")}</h2>
+          <div class="finale-score"><b>${S.score}</b><span>of ${max} points</span></div>
+          <p class="stars" aria-label="${stars} of 3 stars">${[1, 2, 3].map(n => `<span class="${n <= stars ? "on" : ""}" style="--n:${n}">★</span>`).join("")}</p>
+          <p class="rank"><b>${rank[0]}</b>${rank[1]}</p>
+        </div>
+        <ul class="log">${S.results.map(r => `<li><span><i aria-hidden="true">✓</i>${esc(r.name)}</span><span>${r.pts}</span></li>`).join("")}</ul>
         ${installHint("Try another trail next time.")}
         <div class="tools"><button id="againB">Play again from ${esc(st[startIdx()].name)}</button><button class="primary" id="allB">Choose another hunt</button></div>`;
-      $("againB").onclick = restart; $("allB").onclick = () => goTo(""); return;
+      $("againB").onclick = restart; $("allB").onclick = () => goTo("");
+      if (celebrate) { celebrate = false; confetti(); if (navigator.vibrate) navigator.vibrate([60, 60, 60, 60, 200]); }
+      return;
     }
     el.className = "sheet";
     const k = curK(), s = st[k];

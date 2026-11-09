@@ -152,9 +152,34 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 12p
 .hint{font-size:15px;margin:0;font-style:italic}
 .tools{display:flex;gap:16px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:8px}
 .tools button{font-size:14px;padding:8px 10px}
-.done h2{color:var(--chart)}
+/* Finish screen */
+.finale{display:grid;justify-items:center;text-align:center;gap:6px;padding:4px 0 6px}
+.medal{width:104px;height:104px;border-radius:50%;background:var(--chart);color:var(--chart-ink);display:grid;place-content:center;
+  box-shadow:0 0 0 5px var(--gold),0 0 0 9px var(--surface),0 0 0 10px var(--line);margin:8px 0 6px}
+.medal-n{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1}
+.medal-l{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.finale-kicker{margin:0;font-family:var(--f-display);font-weight:700;font-size:40px;line-height:1;text-transform:uppercase;color:var(--chart)}
+.done .finale h2{font-size:20px;color:var(--ink);font-family:var(--f-body);font-weight:600;max-width:30ch}
+.finale-score{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.finale-score b{font-family:var(--f-display);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+.finale-score span{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.stars{margin:0;font-size:30px;letter-spacing:4px;line-height:1}
+.stars span{color:var(--line)} .stars span.on{color:var(--gold)}
+.rank{margin:0;display:grid;gap:2px;font-size:14px;color:var(--muted)}
+.rank b{font-family:var(--f-display);font-size:24px;color:var(--ink);text-transform:uppercase;letter-spacing:.02em}
 .log{font-family:var(--f-mono);font-size:14px;display:grid;gap:4px;margin:0;padding:0;list-style:none;font-variant-numeric:tabular-nums}
 .log li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding:4px 0}
+.log i{font-style:normal;color:var(--ok);margin-right:8px;font-weight:700}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3000}
+@media (prefers-reduced-motion: no-preference){
+  .finale.pop .medal{animation:medal-in .7s cubic-bezier(.2,1.5,.4,1) both}
+  .finale.pop .finale-kicker{animation:win-in .5s .25s cubic-bezier(.2,1.4,.4,1) both}
+  .finale.pop .finale-score,.finale.pop .rank{animation:fade-up .5s .45s ease-out both}
+  .finale.pop .stars span.on{animation:star-in .45s calc(.55s + var(--n) * .18s) cubic-bezier(.2,1.8,.4,1) both}
+  @keyframes medal-in{from{transform:scale(0) rotate(-180deg)}to{transform:none}}
+  @keyframes fade-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes star-in{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+}
 
 /* Map markers */
 .pin{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 13px var(--f-mono);
