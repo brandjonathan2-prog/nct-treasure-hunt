@@ -81,6 +81,7 @@ Each stop has:
 Answers are matched loosely: case, spaces and punctuation are ignored.
 - `"match": ["tail"]` accepts any answer *containing* "tail".
 - `"exact": ["1616"]` accepts only those answers (use it for numbers and dates).
+- Small spelling slips are forgiven: 1 for words of 5–7 letters, 2 for 8 or more (a swapped pair of letters counts as one). Words under 5 letters and anything with digits must be exact, so a short wrong word like "ring" isn't accepted for "king".
 
 ### Circular trails and starting anywhere
 

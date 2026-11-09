@@ -333,6 +333,29 @@
     }
   }
   const points = () => Math.max(25, 100 - (S.hint ? 25 : 0) - S.tries * 10);
+  /* ---------- Answer checking, forgiving small spelling slips ---------- */
+  // How many slips to allow: none for short words or anything with digits, 1 for 5-7 letters, 2 for 8 or more
+  const slips = t => /\d/.test(t) || t.length < 5 ? 0 : t.length < 8 ? 1 : 2;
+  // Edit distance counting a swapped pair of letters as one slip. With partial=true, the term may sit anywhere inside the text.
+  function editDistance(term, text, partial) {
+    const m = term.length, n = text.length;
+    let prev2 = null, prev = Array.from({ length: n + 1 }, (_, j) => partial ? 0 : j);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) {
+        let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (term[i - 1] === text[j - 1] ? 0 : 1));
+        if (i > 1 && j > 1 && term[i - 1] === text[j - 2] && term[i - 2] === text[j - 1]) v = Math.min(v, prev2[j - 2] + 1);
+        cur[j] = v;
+      }
+      prev2 = prev; prev = cur;
+    }
+    return partial ? Math.min(...prev) : prev[n];
+  }
+  function answerMatches(stop, n) {
+    if (stop.exact) return stop.exact.some(t => n === t || (slips(t) && editDistance(t, n, false) <= slips(t)));
+    return stop.match.some(t => n.includes(t) || (slips(t) && editDistance(t, n, true) <= slips(t)));
+  }
+
   // A different cheer each time, a little more muted if hints or retries were needed
   function cheer(p) {
     const full = ["Well spotted!", "Spot on!", "Brilliant!", "Eagle-eyed!", "Superb!", "Nailed it!"];
@@ -342,7 +365,7 @@
   }
   function answer(v) {
     const s = HUNT.stops[curK()], n = norm(v); if (!n) return;
-    const ok = s.exact ? s.exact.includes(n) : s.match.some(m => n.includes(m));
+    const ok = answerMatches(s, n);
     if (ok) {
       const p = points(); S.score += p; S.solved = true; S.results.push({ name: s.name, pts: p });
       msg = { t: cheer(p), pts: p, c: "good", win: true, fresh: true };
