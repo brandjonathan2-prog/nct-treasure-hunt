@@ -50,7 +50,8 @@
   const trailMetres = k => HUNT.legs ? HUNT.legs.reduce((t, l, x) => x === k ? t : t + l.m, 0) : null;
 
   /* ---------- Boot ---------- */
-  const getJSON = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  // "no-cache": always check the site for a newer copy of the hunts (falls back to the saved copy offline)
+  const getJSON = url => fetch(url, { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
   setupInstall();
   if (params.has("photos")) initPhotoCheck();
   else if (!HUNT_ID) initChooser();
